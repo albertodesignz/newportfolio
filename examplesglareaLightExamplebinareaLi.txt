@@ -1,0 +1,4 @@
+examples\gl\areaLightExample\bin\areaLightExample.exe
+
+/d/pointsoflight/points-of-light/examples/gl/computeShaderParticlesExample/bin/computeShaderParticlesExample.exe
+/d/pointsoflight/points-of-light/examples/video/asciiVideoExample

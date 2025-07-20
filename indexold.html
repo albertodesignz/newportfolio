@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Albert Vargas - Portfolio</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎨</text></svg>">
+    
+    <!-- External Dependencies -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://use.typekit.net/bii1ksv.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+    <!-- THREE.JS + OBJLoader + OrbitControls -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+    <script type="module" src="main.js"></script>
+    
+    <!-- Standalone CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <header id="header" class="header-container py-4 px-4 bg-white shadow-sm">
+        <div class="container mx-auto flex flex-row items-center justify-between">
+            <div class="flex-1">
+                <h1 id="name" class="text-4xl sm:text-5xl md:text-6xl text-gray-800 transition-all duration-300 animated-name initialized">
+                    <span class="letter" data-letter="A">A</span>
+                    <span class="letter" data-letter="l">l</span>
+                    <span class="letter" data-letter="b">b</span>
+                    <span class="letter" data-letter="e">e</span>
+                    <span class="letter" data-letter="r">r</span>
+                    <span class="letter" data-letter="t">t</span>
+                    <span class="letter" data-letter=" "> </span>
+                    <span class="letter" data-letter="V">V</span>
+                    <span class="letter" data-letter="a">a</span>
+                    <span class="letter" data-letter="r">r</span>
+                    <span class="letter" data-letter="g">g</span>
+                    <span class="letter" data-letter="a">a</span>
+                    <span class="letter" data-letter="s">s</span>
+                </h1>
+            </div>
+            <nav class="hidden md:flex flex-1 justify-end" aria-label="Social links">
+                <ul class="flex items-center gap-3 text-gray-700">
+                    <li class="flex flex-col items-center justify-around px-3">
+                        <a href="https://www.linkedin.com/in/albertodesignz/" target="_blank" rel="noopener noreferrer" class="text-blue-900 hover:text-blue-700 transition-colors" title="LinkedIn" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin text-3xl"></i>
+                            <span class="sr-only">LinkedIn</span>
+                        </a>
+                    </li>
+                    <li class="flex flex-col items-center justify-between px-3">
+                        <a href="https://medium.com/@albertodesignz" target="_blank" rel="noopener noreferrer" class="text-gray-900 hover:text-gray-700 transition-colors" title="Medium" aria-label="Medium">
+                            <i class="fab fa-medium text-3xl"></i>
+                            <span class="sr-only">Medium</span>
+                        </a>
+                    </li>
+                    <li class="flex flex-col items-center justify-around px-3">
+                        <a href="https://github.com/albertodesignz" target="_blank" rel="noopener noreferrer" class="text-gray-800 hover:text-gray-600 transition-colors" title="GitHub" aria-label="GitHub">
+                            <i class="fab fa-github text-3xl"></i>
+                            <span class="sr-only">GitHub</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <button class="md:hidden text-gray-800 focus:outline-none ml-4" aria-label="Toggle navigation menu">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="container mx-auto mt-4">
+        <section class="flex flex-col md:flex-row justify-between gap-2 mb-4">
+            <div class="w-full">
+                <h2 class="text-3xl md:text-3xl text-gray-800 mb-6">
+                    Bringing 
+                    <span class="text-mustard font-bold relative">
+                        <i class="fas fa-lightbulb floating-icon"></i>
+                        ideas
+                    </span> 
+                    to life through 
+                    <span class="font-bold">creativity</span> 
+                    and 
+                    <span class="font-bold">strategy</span>
+                </h2>
+            </div>
+        </section>
+        <section class="flex flex-col items-center mb-4">
+            <div class="rounded-t-lg h-14 overflow-hidden w-full">
+                <img class="object-cover object-top w-full" src="https://avuxdesign.com/img/header.png" alt="Mountain">
+            </div>
+            <div class="mx-auto w-32 h-32 relative -mt-16 border-4 border-white rounded-full overflow-hidden">
+                <img class="object-cover object-center h-32" src="https://media.licdn.com/dms/image/v2/C4E03AQGba8MS3hKH1w/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1517732047539?e=1753920000&amp;v=beta&amp;t=4JMCapzOi5tVpssXIsHoqYUQxDcA6Vo1O9VmARuOBrY" alt="Albert Vargas">
+            </div>
+            <div class="text-center mt-2">
+                <h2 class="font-semibold">Albert Vargas</h2>
+                <p class="text-gray-500">I'm currently a Principal UX Designer II at <a class="link fw-bold" href="http://www.lexisnexis.com">Lexis Nexis Risk Solutions</a></p>
+            </div>
+        </section>
+        <section class="text-center py-1 relative mb-4">
+            <button id="view-work" class="group flex flex-col items-center gap-4 mx-auto transition-transform hover:-translate-y-1">
+                <span class="text-xl md:text-2xl text-darkblue font-semibold">Take a look at some personal work</span>
+                <i class="fas fa-arrow-down text-2xl text-mustard animate-bounce"></i>
+            </button>
+        </section>
+        <section class="bg-gray-50 py-2 sm:py-2 mb-6">
+            <div class="mx-auto max-w-2xl px-2 lg:max-w-7xl lg:px-2">
+                <div class="mt-10 grid gap-4 sm:mt-2 lg:grid-cols-3 lg:grid-rows-1">
+                    <div class="relative flex flex-col">
+                        <div class="absolute inset-px rounded-3xl bg-white shadow"></div>
+                        <div class="relative flex flex-col overflow-hidden rounded-3xl p-6 h-full">
+                            <div class="mb-4">
+                                <p class="text-2xl font-bold tracking-tight text-gray-950">The Shape of Things</p>
+                                <p class="max-w-lg text-sm/6 text-gray-600">This is an ongoing exploration of different geometric shapes and interactions.</p>
+                            </div>
+                            <div class="grid grid-cols-3 grid-rows-2 gap-3 aspect-[3/2] h-full">
+                                <div class="col-span-2 row-span-2 bg-gray-200 rounded-2xl shadow overflow-hidden flex">
+                                    <img class="object-cover w-full h-full" src="images/gasket.gif" alt="Gasket">
+                                </div>
+                                <div class="col-span-1 row-span-1 bg-gray-100 rounded-xl shadow overflow-hidden flex">
+                                    <img class="object-cover w-full h-full" src="images/triangle.gif" alt="Triangle">
+                                </div>
+                                <div class="col-span-1 row-span-1 bg-gray-100 rounded-xl shadow overflow-hidden flex">
+                                    <img class="object-cover w-full h-full" src="images/hex.gif" alt="Hex">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative flex flex-col">
+                        <div class="absolute inset-px rounded-3xl bg-white shadow"></div>
+                        <div class="relative flex flex-col overflow-hidden rounded-3xl p-6">
+                            <div class="mb-4">
+                                <p class="text-2xl font-bold tracking-tight text-gray-950">Expression Connection</p>
+                                <p class="max-w-lg text-sm/6 text-gray-600">A proto-sketch of an app with fun games for learning emotions.</p>
+                            </div>
+                            <div class="grid grid-cols-3 grid-rows-3 gap-4 aspect-[3/2]">
+                                <div class="col-span-2 row-span-2 bg-gray-200 rounded-2xl shadow overflow-hidden flex">
+                                    <img class="object-cover w-full h-full" src="images/expression-connection-thumb2.png" alt="Expression Connection">
+                                </div>
+                                <div class="col-span-1 row-span-1 bg-gray-100 rounded-xl shadow overflow-hidden flex items-center justify-center">
+                                    <img class="object-cover w-full h-full" src="images/expression-connection-thumb.png" alt="Expression Connection">
+                                </div>
+                                <div class="col-span-1 row-span-1 bg-gray-100 rounded-xl shadow overflow-hidden flex items-center justify-center">
+                                    <img class="object-cover w-full h-full" src="images/happymonster1.png" alt="Expression Connection">
+                                </div>
+                                <div class="col-span-3 row-span-2 bg-gray-100 rounded-xl shadow overflow-hidden flex">
+                                    <img class="object-cover w-full h-full" src="images/gallery.png" alt="Mappy Monster Sprite">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative lg:col-span-1">
+                        <div class="absolute inset-px rounded-3xl bg-white shadow"></div>
+                        <div class="relative flex flex-col overflow-hidden rounded-3xl p-6 h-full">
+                            <div class="mb-4">
+                                <p class="text-2xl font-bold tracking-tight text-gray-950">We Are Made of Stars</p>
+                                <p class="max-w-lg text-sm/6 text-gray-600">An interactive exploration of real-time face detection with dynamic visual effects.</p>
+                            </div>
+                            <div class="grid grid-cols-3 grid-rows-2 gap-3 aspect-[3/2] h-full">
+                                <div class="col-span-2 row-span-2 bg-gray-200 rounded-2xl shadow overflow-hidden flex">
+                                    <img class="object-cover w-full h-full" src="images/madeofstars.gif" alt="We Are Made of Stars">
+                                </div>
+                                <div class="col-span-1 row-span-1 bg-gray-100 rounded-xl shadow overflow-hidden flex">
+                                    <img class="object-cover w-full h-full" src="images/madeofstars.gif" alt="We Are Made of Stars Thumbnail 2">
+                                </div>
+                                <div class="col-span-1 row-span-1 bg-gray-100 rounded-xl shadow overflow-hidden flex">
+                                    <img class="object-cover w-full h-full" src="images/madeofstars.gif" alt="We Are Made of Stars Thumbnail 3">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-6">
+            <div class="bg-white rounded-3xl shadow p-6 flex flex-col h-full">
+                <h3 class="text-2xl font-bold mb-4 text-gray-900">Random ideas, designs and widgets</h3>
+                <div class="grid grid-cols-3 grid-rows-1 gap-3 aspect-[3/2]">
+                    <div class="scene-wrapper">
+                        <!-- Carousel 1 -->
+                        <div class="scene">
+                          <h2 class="scene__title" data-speed="0.7">
+                            <a href="#preview-1"><span>Haute Couture Nights — Paris</span></a>
+                          </h2>
+                          <div class="carousel">
+                            <div class="carousel__cell">
+                              <div class="card" style="--img: url(../assets/img1.webp)">
+                                <div class="card__face card__face--front"></div>
+                                <div class="card__face card__face--back"></div>
+                              </div>
+                            </div>
+                            <div class="carousel__cell">
+                              <div class="card" style="--img: url(../assets/img2.webp)">
+                                <div class="card__face card__face--front"></div>
+                                <div class="card__face card__face--back"></div>
+                              </div>
+                            </div>
+                            <div class="carousel__cell">
+                              <div class="card" style="--img: url(../assets/img3.webp)">
+                                <div class="card__face card__face--front"></div>
+                                <div class="card__face card__face--back"></div>
+                              </div>
+                            </div>
+                            <div class="carousel__cell">
+                              <div class="card" style="--img: url(../assets/img4.webp)">
+                                <div class="card__face card__face--front"></div>
+                                <div class="card__face card__face--back"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>    
+                    <div class="col-span-1 row-span-1 bg-gray-200 rounded-2xl shadow overflow-hidden flex items-center justify-center">
+                        <img class="object-cover w-full h-full" src="images/solar-system-viewer-template-window.png" alt="Solar System Viewer">
+                    </div>
+                    <div class="col-span-1 row-span-1 bg-gray-100 rounded-xl shadow overflow-hidden flex items-center justify-center">
+                        <img class="object-cover w-full h-full" src="images/cyberbike.gif" alt="Cyberbike">
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="bg-white rounded-3xl shadow p-6 flex flex-col justify-center h-full">
+                <h3 class="text-2xl font-bold mb-4 text-gray-900">About Me</h3>
+                <p class="text-gray-700 mb-2">Hi, I'm Albert Vargas, a Principal UX Designer II at Lexis Nexis Risk Solutions. I love exploring new ideas, prototyping creative widgets, and building delightful user experiences.</p>
+                <p class="text-gray-700 mb-2">With a background in design, code, and strategy, I enjoy bridging the gap between imagination and reality. My portfolio is a playground for experiments, side projects, and design explorations.</p>
+                <p class="text-gray-700">Let's connect and create something amazing together!</p>
+            </div>
+        </section>
+        <!-- 3D Carousel Section Start -->
+        <section id="carousel-section" class="flex flex-col items-center justify-center w-full py-8">
+          <div class="mx-auto flex flex-col md:flex-row items-stretch justify-center gap-6 max-w-4xl w-full">
+            <!-- Carousel Container -->
+            <div class="relative flex flex-col items-center justify-center bg-white rounded-3xl shadow-lg p-6 w-full md:w-2/3 min-h-[420px]">
+              <!-- Up Arrow -->
+              <button id="carousel-up" class="absolute top-2 left-1/2 -translate-x-1/2 z-10 bg-gray-100 rounded-full p-2 shadow hover:bg-gray-200 focus:outline-none" aria-label="Previous Section">
+                <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/></svg>
+              </button>
+              <!-- Carousel Title Overlay -->
+              <div id="carousel-title" class="absolute top-8 left-1/2 -translate-x-1/2 z-10 bg-black/60 text-white px-6 py-2 rounded-full text-lg font-bold pointer-events-none select-none shadow">
+                Game Ideas
+              </div>
+              <!-- 3D Carousel -->
+              <div id="carousel-3d" class="relative flex items-center justify-center h-64 w-full overflow-visible" style="perspective: 1000px;">
+                <!-- Images will be injected here by JS -->
+              </div>
+              <!-- Left Arrow -->
+              <button id="carousel-left" class="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-gray-100 rounded-full p-2 shadow hover:bg-gray-200 focus:outline-none" aria-label="Previous Image">
+                <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+              </button>
+              <!-- Right Arrow -->
+              <button id="carousel-right" class="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-gray-100 rounded-full p-2 shadow hover:bg-gray-200 focus:outline-none" aria-label="Next Image">
+                <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+              </button>
+              <!-- Down Arrow -->
+              <button id="carousel-down" class="absolute bottom-2 left-1/2 -translate-x-1/2 z-10 bg-gray-100 rounded-full p-2 shadow hover:bg-gray-200 focus:outline-none" aria-label="Next Section">
+                <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+              </button>
+            </div>
+            <!-- About Section -->
+            <div id="carousel-about" class="flex-1 bg-gray-50 rounded-3xl shadow-lg p-6 flex flex-col items-center justify-center min-h-[420px] text-center">
+              <h3 class="text-xl font-bold mb-2">About this section</h3>
+              <p id="carousel-about-text" class="text-gray-700">Game Ideas: A collection of playful concepts and interactive experiments.</p>
+            </div>
+          </div>
+        </section>
+        <!-- 3D Carousel Section End -->
+
+        <!-- Minimal Custom CSS for 3D effect (improved for Tailwind compatibility) -->
+        <style>
+          #carousel-3d {
+            position: relative;
+            perspective: 1000px;
+            min-height: 260px;
+            height: 260px;
+            width: 100%;
+            display: block;
+          }
+          .carousel-3d-item {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 160px;
+            height: 220px;
+            transform-style: preserve-3d;
+            transition: transform 0.7s cubic-bezier(.77,0,.18,1), opacity 0.5s;
+            box-shadow: 0 4px 24px 0 rgba(0,0,0,0.10);
+            border-radius: 1rem;
+            overflow: hidden;
+            background: #fff;
+            opacity: 0.7;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+          }
+          .carousel-3d-item.active {
+            opacity: 1;
+            z-index: 2;
+            box-shadow: 0 8px 32px 0 rgba(0,0,0,0.18);
+            pointer-events: auto;
+          }
+        </style>
+
+        <!-- GSAP CDN -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+        <!-- Carousel JS (wrapped in DOMContentLoaded) -->
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          const carouselSections = [
+            {
+              title: 'Game Ideas',
+              about: 'Game Ideas: A collection of playful concepts and interactive experiments.',
+              images: [
+                'images/gallery.png',
+                'images/cyberbike.gif',
+                'images/triangle.gif',
+                'images/hex.gif',
+                'images/shapeofthings.gif',
+                'images/happymonster1.png',
+              ]
+            },
+            {
+              title: 'Protosketches',
+              about: 'Protosketches: Early design explorations and UI prototypes.',
+              images: [
+                'images/solar-system-viewer-template-window.png',
+                'images/pshop.mp4',
+                'images/expression-connection-thumb.png',
+                'images/expression-connection-thumb2.png',
+                'images/mirromatch.png',
+                'images/gallery.png',
+              ]
+            },
+            {
+              title: 'Typography',
+              about: 'Typography: Experiments with type, layout, and visual rhythm.',
+              images: [
+                'images/header.png',
+                'images/nitecrawler.png',
+                'images/feelingfinder2.png',
+                'images/madeofstars.gif',
+                'images/gasket.gif',
+                'images/hex.gif',
+              ]
+            }
+          ]
+
+          let currentSection = 0
+          let currentIndex = 0
+          const numItems = 6
+
+          const carousel3d = document.getElementById('carousel-3d')
+          const carouselTitle = document.getElementById('carousel-title')
+          const carouselAbout = document.getElementById('carousel-about-text')
+          const btnLeft = document.getElementById('carousel-left')
+          const btnRight = document.getElementById('carousel-right')
+          const btnUp = document.getElementById('carousel-up')
+          const btnDown = document.getElementById('carousel-down')
+
+          function renderCarousel(sectionIdx, activeIdx, animate = true) {
+            carousel3d.innerHTML = ''
+            const { images } = carouselSections[sectionIdx]
+            const angle = 360 / numItems
+            images.forEach((src, i) => {
+              const item = document.createElement('div')
+              item.className = 'carousel-3d-item' + (i === activeIdx ? ' active' : '')
+              item.style.transform = `rotateY(${angle * (i - activeIdx)}deg) translateZ(340px)`
+              if (src.endsWith('.mp4')) {
+                const video = document.createElement('video')
+                video.src = src
+                video.autoplay = true
+                video.loop = true
+                video.muted = true
+                video.className = 'object-cover w-full h-full rounded-xl'
+                item.appendChild(video)
+              } else {
+                const img = document.createElement('img')
+                img.src = src
+                img.alt = ''
+                img.className = 'object-cover w-full h-full rounded-xl'
+                item.appendChild(img)
+              }
+              carousel3d.appendChild(item)
+            })
+            // Animate with GSAP
+            if (animate) {
+              gsap.fromTo('.carousel-3d-item', { opacity: 0, y: 40 }, { opacity: 1, y: 0, stagger: 0.05, duration: 0.5 })
+            }
+            // Update arrows
+            btnLeft.disabled = activeIdx === 0
+            btnRight.disabled = activeIdx === numItems - 1
+          }
+
+          function updateSection(newSection, animate = true) {
+            if (newSection < 0 || newSection >= carouselSections.length) return
+            // Animate fade/slide out
+            if (animate) {
+              gsap.to(carousel3d, { opacity: 0, y: 40, duration: 0.4, onComplete: () => {
+                currentSection = newSection
+                currentIndex = 0
+                carouselTitle.textContent = carouselSections[currentSection].title
+                carouselAbout.textContent = carouselSections[currentSection].about
+                renderCarousel(currentSection, currentIndex, false)
+                gsap.fromTo(carousel3d, { opacity: 0, y: -40 }, { opacity: 1, y: 0, duration: 0.5 })
+              }})
+            } else {
+              currentSection = newSection
+              currentIndex = 0
+              carouselTitle.textContent = carouselSections[currentSection].title
+              carouselAbout.textContent = carouselSections[currentSection].about
+              renderCarousel(currentSection, currentIndex, false)
+            }
+            // Update up/down arrows
+            btnUp.disabled = currentSection === 0
+            btnDown.disabled = currentSection === carouselSections.length - 1
+          }
+
+          btnLeft.addEventListener('click', () => {
+            if (currentIndex > 0) {
+              currentIndex--
+              renderCarousel(currentSection, currentIndex)
+            }
+          })
+          btnRight.addEventListener('click', () => {
+            if (currentIndex < numItems - 1) {
+              currentIndex++
+              renderCarousel(currentSection, currentIndex)
+            }
+          })
+          btnUp.addEventListener('click', () => updateSection(currentSection - 1))
+          btnDown.addEventListener('click', () => updateSection(currentSection + 1))
+
+          // Initial render
+          carouselTitle.textContent = carouselSections[currentSection].title
+          carouselAbout.textContent = carouselSections[currentSection].about
+          renderCarousel(currentSection, currentIndex, false)
+          btnUp.disabled = true
+          btnDown.disabled = false
+        })
+        </script>
+    </main>
+
+    <!-- Contact Button -->
+    <div id="contact-btn" class="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-50">
+        <a href="mailto:albertlazarovargas@gmail.com" class="bg-darkblue text-white w-14 h-14 md:w-16 md:h-16 rounded-full shadow-lg flex items-center justify-center hover:opacity-90 transition-opacity" aria-label="Contact me" title="Contact me">
+            <i class="fas fa-envelope text-xl"></i>
+            <span class="sr-only">Contact me</span>
+        </a>
+    </div>
+
+    <!-- Contact Form Modal -->
+    <div id="contact-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden p-4">
+        <div class="bg-white rounded-xl p-6 md:p-8 max-w-md w-full mx-auto">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-semibold text-darkblue">Get in Touch</h3>
+                <button id="close-modal" class="text-gray-500 hover:text-gray-700" aria-label="Close contact form" title="Close">
+                    <i class="fas fa-times"></i>
+                    <span class="sr-only">Close</span>
+                </button>
+            </div>
+            <form>
+                <div class="mb-4">
+                    <label for="name" class="block text-gray-700 mb-2">
+                        <i class="fas fa-user text-darkblue mr-2"></i>Name
+                    </label>
+                    <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-darkblue" required>
+                </div>
+                <div class="mb-4">
+                    <label for="email" class="block text-gray-700 mb-2">
+                        <i class="fas fa-envelope text-darkblue mr-2"></i>Email
+                    </label>
+                    <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-darkblue" required>
+                </div>
+                <div class="mb-6">
+                    <label for="message" class="block text-gray-700 mb-2">
+                        <i class="fas fa-comment-alt text-darkblue mr-2"></i>Message
+                    </label>
+                    <textarea id="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-darkblue" required></textarea>
+                </div>
+                <button type="submit" class="w-full bg-darkblue text-white py-3 rounded-lg hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
+                    <span>Send Message</span>
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
