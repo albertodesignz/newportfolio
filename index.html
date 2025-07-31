@@ -17,8 +17,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
     <link href="https://use.typekit.net/ccs0evy.css" rel="stylesheet" />
+
     <link href="css/base.css" rel="stylesheet" type="text/css" />
-     
+     <link rel="stylesheet" href="https://use.typekit.net/ema1zlb.css">
     <!-- Standalone CSS -->
     <link rel="stylesheet" href="styles.css">
     <script type="module" src="main.js"></script>
@@ -76,7 +77,7 @@
                 to life through 
                 <span class="font-bold">creativity</span> 
                 and 
-                <span class="font-bold">strategy</span>
+                <span class="font-bold">strategy</span> See my personal work below:
             </h2>
         </div>
     </section>
@@ -91,8 +92,7 @@
         <div class="text-left mt-5">
           <p class="text-gray-500">I am currently a Principal UX Designer II at <a class="link fw-bold" href="http://www.lexisnexis.com">Lexis Nexis Risk Solutions</a></p> 
           <button id="view-work" class="group flex flex-col items-center gap-4 mx-auto transition-transform hover:-translate-y-1">
-            <span class="text-xl md:text-2xl text-darkblue font-semibold">Take a look at some personal work</span>
-            <i class="fas fa-arrow-down text-2xl text-mustard animate-bounce"></i>
+           
           </button>
         </div>
       </section>
@@ -105,16 +105,16 @@
       
       <div id="smooth-content">
         <div class="scene-wrapper">
-        <section>Test</section> <!-- Carousel 1 -->=]
+    
         
         <div class="scene">
           <h2 class="scene__title" data-speed="0.7">
-            <a href="#preview-1"><span>Expression Connection</span></a>
+            <a href="#preview-1"><span>ExpressionConnection</span></a>
           </h2>
           <!-- Interactive Card Rotation: Click cards to rotate them, or use the control buttons that appear on hover -->
           <div class="carousel">
             <div class="carousel__cell">
-              <div class="card" style="--img: url(../assets/img1.webp)" data-rotation-type="flip">
+              <div class="card" style="--img: url(../assets/expression-connection-thumb.png)" data-rotation-type="flip">
                 <div class="card__face card__face--front"></div>
                 <div class="card__face card__face--back"></div>
                 <div class="card__controls">
@@ -125,7 +125,7 @@
               </div>
             </div>
             <div class="carousel__cell">
-              <div class="card" style="--img: url(../assets/img2.webp)" data-rotation-type="spin">
+              <div class="card" style="--img: url(../assets/feelingfinder2.png)" data-rotation-type="spin">
                 <div class="card__face card__face--front"></div>
                 <div class="card__face card__face--back"></div>
                 <div class="card__controls">
@@ -136,7 +136,7 @@
               </div>
             </div>
             <div class="carousel__cell">
-              <div class="card" style="--img: url(../assets/img3.webp)" data-rotation-type="wobble">
+              <div class="card" style="--img: url(../assets/happymonster1.png)" data-rotation-type="wobble">
                 <div class="card__face card__face--front"></div>
                 <div class="card__face card__face--back"></div>
                 <div class="card__controls">
@@ -147,7 +147,40 @@
               </div>
             </div>
             <div class="carousel__cell">
-              <div class="card" style="--img: url(../assets/img4.webp)" data-rotation-type="flip">
+              <div class="card" style="--img: url(../assets/gallery.png)" data-rotation-type="flip">
+                <div class="card__face card__face--front"></div>
+                <div class="card__face card__face--back"></div>
+                <div class="card__controls">
+                  <button class="card__btn card__btn--flip" title="Flip Card" onclick="rotateCard(this.closest('.card'), 'flip')">↻</button>
+                  <button class="card__btn card__btn--spin" title="Spin Card" onclick="rotateCard(this.closest('.card'), 'spin')">⟲</button>
+                  <button class="card__btn card__btn--wobble" title="Wobble Card" onclick="rotateCard(this.closest('.card'), 'wobble')">～</button>
+                </div>
+              </div>
+            </div>
+            <div class="carousel__cell">
+              <div class="card" style="--img: url(../assets/happy.png)" data-rotation-type="spin">
+                <div class="card__face card__face--front"></div>
+                <div class="card__face card__face--back"></div>
+                <div class="card__controls">
+                  <button class="card__btn card__btn--flip" title="Flip Card" onclick="rotateCard(this.closest('.card'), 'flip')">↻</button>
+                  <button class="card__btn card__btn--spin" title="Spin Card" onclick="rotateCard(this.closest('.card'), 'spin')">⟲</button>
+                  <button class="card__btn card__btn--wobble" title="Wobble Card" onclick="rotateCard(this.closest('.card'), 'wobble')">～</button>
+                </div>
+              </div>
+            </div>
+            <div class="carousel__cell">
+              <div class="card" style="--img: url(../assets/scared.png)" data-rotation-type="wobble">
+                <div class="card__face card__face--front"></div>
+                <div class="card__face card__face--back"></div>
+                <div class="card__controls">
+                  <button class="card__btn card__btn--flip" title="Flip Card" onclick="rotateCard(this.closest('.card'), 'flip')">↻</button>
+                  <button class="card__btn card__btn--spin" title="Spin Card" onclick="rotateCard(this.closest('.card'), 'spin')">⟲</button>
+                  <button class="card__btn card__btn--wobble" title="Wobble Card" onclick="rotateCard(this.closest('.card'), 'wobble')">～</button>
+                </div>
+              </div>
+            </div>
+            <div class="carousel__cell">
+              <div class="card" style="--img: url(../assets/character.png)" data-rotation-type="flip">
                 <div class="card__face card__face--front"></div>
                 <div class="card__face card__face--back"></div>
                 <div class="card__controls">
@@ -162,31 +195,51 @@
         <!-- Carousel 2 -->
         <div class="scene">
           <h2 class="scene__title" data-speed="0.7">
-            <a href="#preview-2"><span>A.I.dvocate</span></a>
+            <a href="#preview-2"><span>Cyber Bike</span></a>
           </h2>
           <div class="carousel">
             <div class="carousel__cell">
-              <div class="card" style="--img: url(../assets/img13.webp)">
+              <div class="card" style="--img: url(../assets/cyberbike.png)" data-rotation-type="flip">
                 <div class="card__face card__face--front"></div>
                 <div class="card__face card__face--back"></div>
+                <div class="card__controls">
+                  <button class="card__btn card__btn--flip" title="Flip Card" onclick="rotateCard(this.closest('.card'), 'flip')">↻</button>
+                  <button class="card__btn card__btn--spin" title="Spin Card" onclick="rotateCard(this.closest('.card'), 'spin')">⟲</button>
+                  <button class="card__btn card__btn--wobble" title="Wobble Card" onclick="rotateCard(this.closest('.card'), 'wobble')">～</button>
+                </div>
               </div>
             </div>
             <div class="carousel__cell">
-              <div class="card" style="--img: url(../assets/img14.webp)">
+              <div class="card" style="--img: url(../assets/cyberbike2.png)" data-rotation-type="spin">
                 <div class="card__face card__face--front"></div>
                 <div class="card__face card__face--back"></div>
+                <div class="card__controls">
+                  <button class="card__btn card__btn--flip" title="Flip Card" onclick="rotateCard(this.closest('.card'), 'flip')">↻</button>
+                  <button class="card__btn card__btn--spin" title="Spin Card" onclick="rotateCard(this.closest('.card'), 'spin')">⟲</button>
+                  <button class="card__btn card__btn--wobble" title="Wobble Card" onclick="rotateCard(this.closest('.card'), 'wobble')">～</button>
+                </div>
               </div>
             </div>
             <div class="carousel__cell">
-              <div class="card" style="--img: url(../assets/img15.webp)">
+              <div class="card" style="--img: url(../assets/cyberbike3.png)" data-rotation-type="wobble">
                 <div class="card__face card__face--front"></div>
                 <div class="card__face card__face--back"></div>
+                <div class="card__controls">
+                  <button class="card__btn card__btn--flip" title="Flip Card" onclick="rotateCard(this.closest('.card'), 'flip')">↻</button>
+                  <button class="card__btn card__btn--spin" title="Spin Card" onclick="rotateCard(this.closest('.card'), 'spin')">⟲</button>
+                  <button class="card__btn card__btn--wobble" title="Wobble Card" onclick="rotateCard(this.closest('.card'), 'wobble')">～</button>
+                </div>
               </div>
             </div>
             <div class="carousel__cell">
-              <div class="card" style="--img: url(../assets/img16.webp)">
+              <div class="card" style="--img: url(../assets/startscreen.png)" data-rotation-type="flip">
                 <div class="card__face card__face--front"></div>
                 <div class="card__face card__face--back"></div>
+                <div class="card__controls">
+                  <button class="card__btn card__btn--flip" title="Flip Card" onclick="rotateCard(this.closest('.card'), 'flip')">↻</button>
+                  <button class="card__btn card__btn--spin" title="Spin Card" onclick="rotateCard(this.closest('.card'), 'spin')">⟲</button>
+                  <button class="card__btn card__btn--wobble" title="Wobble Card" onclick="rotateCard(this.closest('.card'), 'wobble')">～</button>
+                </div>
               </div>
             </div>
           </div>          
@@ -343,75 +396,63 @@
         </header>
         <div class="grid">
           <figure aria-labelledby="caption1" class="grid__item" role="img">
-            <div class="grid__item-image" style="background-image: url(assets/img1.webp)"></div>
+            <div class="grid__item-image" style="background-image: url(assets/expression-connection-thumb.png)"></div>
             <figcaption class="grid__item-caption" id="caption1">
-              <h3>Kai Vega</h3>
+              <h3>Expression Connection</h3>
             </figcaption>
           </figure>
           <figure aria-labelledby="caption2" class="grid__item" role="img">
-            <div class="grid__item-image" style="background-image: url(assets/img2.webp)"></div>
+            <div class="grid__item-image" style="background-image: url(assets/expression-connection-thumb2.png)"></div>
             <figcaption class="grid__item-caption" id="caption2">
-              <h3>Riven Juno</h3>
+              <h3>Connection Thumb 2</h3>
             </figcaption>
           </figure>
           <figure aria-labelledby="caption3" class="grid__item" role="img">
-            <div class="grid__item-image" style="background-image: url(assets/img3.webp)"></div>
+            <div class="grid__item-image" style="background-image: url(assets/feelingfinder2.png)"></div>
             <figcaption class="grid__item-caption" id="caption3">
-              <h3>Lex Orion</h3>
+              <h3>Feeling Finder</h3>
             </figcaption>
           </figure>
           <figure aria-labelledby="caption4" class="grid__item" role="img">
-            <div class="grid__item-image" style="background-image: url(assets/img4.webp)"></div>
+            <div class="grid__item-image" style="background-image: url(assets/gallery.png)"></div>
             <figcaption class="grid__item-caption" id="caption4">
-              <h3>Ash Kairos</h3>
+              <h3>Gallery</h3>
             </figcaption>
           </figure>
           <figure aria-labelledby="caption5" class="grid__item" role="img">
-            <div class="grid__item-image" style="background-image: url(assets/img5.webp)"></div>
+            <div class="grid__item-image" style="background-image: url(assets/happymonster1.png)"></div>
             <figcaption class="grid__item-caption" id="caption5">
-              <h3>Juno Sol</h3>
+              <h3>Happy Monster</h3>
             </figcaption>
           </figure>
           <figure aria-labelledby="caption6" class="grid__item" role="img">
-            <div class="grid__item-image" style="background-image: url(assets/img6.webp)"></div>
+            <div class="grid__item-image" style="background-image: url(assets/happymonstersprite.png)"></div>
             <figcaption class="grid__item-caption" id="caption6">
-              <h3>Soren Nyx</h3>
+              <h3>Happy Monster Sprite</h3>
             </figcaption>
           </figure>
           <figure aria-labelledby="caption7" class="grid__item" role="img">
-            <div class="grid__item-image" style="background-image: url(assets/img7.webp)"></div>
+            <div class="grid__item-image" style="background-image: url(assets/mirromatch.png)"></div>
             <figcaption class="grid__item-caption" id="caption7">
-              <h3>Quinn Axon</h3>
+              <h3>Mirror Match</h3>
             </figcaption>
           </figure>
           <figure aria-labelledby="caption8" class="grid__item" role="img">
-            <div class="grid__item-image" style="background-image: url(assets/img8.webp)"></div>
+            <div class="grid__item-image" style="background-image: url(assets/happy.png)"></div>
             <figcaption class="grid__item-caption" id="caption8">
-              <h3>Zara Voss</h3>
+              <h3>Happy</h3>
             </figcaption>
           </figure>
           <figure aria-labelledby="caption9" class="grid__item" role="img">
-            <div class="grid__item-image" style="background-image: url(assets/img9.webp)"></div>
+            <div class="grid__item-image" style="background-image: url(assets/scared.png)"></div>
             <figcaption class="grid__item-caption" id="caption9">
-              <h3>Hale B.</h3>
+              <h3>Scared</h3>
             </figcaption>
           </figure>
           <figure aria-labelledby="caption10" class="grid__item" role="img">
-            <div class="grid__item-image" style="background-image: url(assets/img10.webp)"></div>
+            <div class="grid__item-image" style="background-image: url(assets/character.png)"></div>
             <figcaption class="grid__item-caption" id="caption10">
-              <h3>Gundra Wex</h3>
-            </figcaption>
-          </figure>
-          <figure aria-labelledby="caption61" class="grid__item" role="img">
-            <div class="grid__item-image" style="background-image: url(assets/img11.webp)"></div>
-            <figcaption class="grid__item-caption" id="caption61">
-              <h3>Extra One</h3>
-            </figcaption>
-          </figure>
-          <figure aria-labelledby="caption62" class="grid__item" role="img">
-            <div class="grid__item-image" style="background-image: url(assets/img12.webp)"></div>
-            <figcaption class="grid__item-caption" id="caption62">
-              <h3>Extra Two</h3>
+              <h3>Character</h3>
             </figcaption>
           </figure>
         </div>
@@ -419,80 +460,44 @@
       <!--/ preview-1 -->
       <div class="preview" id="preview-2">
         <header class="preview__header">
-          <h2 class="preview__title"><span>Vogue Evolution — New York City</span></h2>
+          <h2 class="preview__title"><span>Cyber Bike</span></h2>
           <button class="preview__close">Close ×</button>
         </header>
         <div class="grid">
           <figure aria-labelledby="caption11" class="grid__item" role="img">
-            <div class="grid__item-image" style="background-image: url(assets/img13.webp)"></div>
+            <div class="grid__item-image" style="background-image: url(assets/cyberbike.png)"></div>
             <figcaption class="grid__item-caption" id="caption11">
-              <h3>Arlo Quinn</h3>
+              <h3>Cyber Bike</h3>
             </figcaption>
           </figure>
           <figure aria-labelledby="caption12" class="grid__item" role="img">
-            <div class="grid__item-image" style="background-image: url(assets/img14.webp)"></div>
+            <div class="grid__item-image" style="background-image: url(assets/cyberbike2.png)"></div>
             <figcaption class="grid__item-caption" id="caption12">
-              <h3>Vera Kline</h3>
+              <h3>Cyber Bike 2</h3>
             </figcaption>
           </figure>
           <figure aria-labelledby="caption13" class="grid__item" role="img">
-            <div class="grid__item-image" style="background-image: url(assets/img15.webp)"></div>
+            <div class="grid__item-image" style="background-image: url(assets/cyberbike3.png)"></div>
             <figcaption class="grid__item-caption" id="caption13">
-              <h3>Juno Vale</h3>
+              <h3>Cyber Bike 3</h3>
             </figcaption>
           </figure>
           <figure aria-labelledby="caption14" class="grid__item" role="img">
-            <div class="grid__item-image" style="background-image: url(assets/img16.webp)"></div>
+            <div class="grid__item-image" style="background-image: url(assets/startscreen.png)"></div>
             <figcaption class="grid__item-caption" id="caption14">
-              <h3>Ember Dash</h3>
+              <h3>Start Screen</h3>
             </figcaption>
           </figure>
           <figure aria-labelledby="caption15" class="grid__item" role="img">
-            <div class="grid__item-image" style="background-image: url(assets/img17.webp)"></div>
+            <div class="grid__item-image" style="background-image: url(assets/cyberbikeSelection1.png)"></div>
             <figcaption class="grid__item-caption" id="caption15">
-              <h3>Rylee Voss</h3>
+              <h3>Bike Selection 1</h3>
             </figcaption>
           </figure>
           <figure aria-labelledby="caption16" class="grid__item" role="img">
-            <div class="grid__item-image" style="background-image: url(assets/img18.webp)"></div>
+            <div class="grid__item-image" style="background-image: url(assets/cyberbikeSelection2.png)"></div>
             <figcaption class="grid__item-caption" id="caption16">
-              <h3>Harlow Nova</h3>
-            </figcaption>
-          </figure>
-          <figure aria-labelledby="caption17" class="grid__item" role="img">
-            <div class="grid__item-image" style="background-image: url(assets/img19.webp)"></div>
-            <figcaption class="grid__ibg-gray-100tem-caption" id="caption17">
-              <h3>Blake Lune</h3>
-            </figcaption>
-          </figure>
-          <figure aria-labelledby="caption18" class="grid__item" role="img">
-            <div class="grid__item-image" style="background-image: url(assets/img22.webp)"></div>
-            <figcaption class="grid__item-caption" id="caption18">
-              <h3>Zephyr Kade</h3>
-            </figcaption>
-          </figure>
-          <figure aria-labelledby="caption19" class="grid__item" role="img">
-            <div class="grid__item-image" style="background-image: url(assets/img21.webp)"></div>
-            <figcaption class="grid__item-caption" id="caption19">
-              <h3>Indigo Rae</h3>
-            </figcaption>
-          </figure>
-          <figure aria-labelledby="caption20" class="grid__item" role="img">
-            <div class="grid__item-image" style="background-image: url(assets/img22.webp)"></div>
-            <figcaption class="grid__item-caption" id="caption20">
-              <h3>Kairo Jett</h3>
-            </figcaption>
-          </figure>
-          <figure aria-labelledby="caption63" class="grid__item" role="img">
-            <div class="grid__item-image" style="background-image: url(assets/img23.webp)"></div>
-            <figcaption class="grid__item-caption" id="caption63">
-              <h3>Extra One</h3>
-            </figcaption>
-          </figure>
-          <figure aria-labelledby="caption64" class="grid__item" role="img">
-            <div class="grid__item-image" style="background-image: url(assets/img24.webp)"></div>
-            <figcaption class="grid__item-caption" id="caption64">
-              <h3>Extra Two</h3>
+              <h3>Bike Selection 2</h3>
             </figcaption>
           </figure>
         </div>
