@@ -30,7 +30,10 @@ body {
 
 /* Custom styles extracted from index.html */
 
-
+.feelingfinder {font-family: "jumble", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    }
 
 h1 {
     font-family: "droog", sans-serif;
