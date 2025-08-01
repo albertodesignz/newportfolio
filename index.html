@@ -20,6 +20,7 @@
 
     <link href="css/base.css" rel="stylesheet" type="text/css" />
      <link rel="stylesheet" href="https://use.typekit.net/ema1zlb.css">
+     <link rel="stylesheet" href="https://use.typekit.net/vio6hmm.css">
     <!-- Standalone CSS -->
     <link rel="stylesheet" href="styles.css">
     <script type="module" src="main.js"></script>
@@ -109,88 +110,55 @@
         
         <div class="scene">
           <h2 class="scene__title" data-speed="0.7">
-            <a href="#preview-1"><span>ExpressionConnection</span></a>
+            <a href="#preview-1"><span class="feelingfinder" style="display: flex; align-items: center; justify-content: center; font-size: 1.5em;"><img src="assets/FeelingFinder/logo.png" alt="Feeling Finder Logo" style="height: 2em; vertical-align: middle; margin-right: 0.5em;">Feeling Finder</span></a>
           </h2>
           <!-- Interactive Card Rotation: Click cards to rotate them, or use the control buttons that appear on hover -->
-          <div class="carousel">
-            <div class="carousel__cell">
-              <div class="card" style="--img: url(../assets/expression-connection-thumb.png)" data-rotation-type="flip">
-                <div class="card__face card__face--front"></div>
-                <div class="card__face card__face--back"></div>
-                <div class="card__controls">
-                  <button class="card__btn card__btn--flip" title="Flip Card" onclick="rotateCard(this.closest('.card'), 'flip')">↻</button>
-                  <button class="card__btn card__btn--spin" title="Spin Card" onclick="rotateCard(this.closest('.card'), 'spin')">⟲</button>
-                  <button class="card__btn card__btn--wobble" title="Wobble Card" onclick="rotateCard(this.closest('.card'), 'wobble')">～</button>
+                      <div class="carousel">
+              <div class="carousel__cell">
+                <div class="card" style="--img: url(../assets/FeelingFinder/sad.png)" data-rotation-type="flip">
+                  <div class="card__face card__face--front"></div>
+                  <div class="card__face card__face--back"></div>
+                  <div class="card__controls">
+                    <button class="card__btn card__btn--flip" title="Flip Card" onclick="rotateCard(this.closest('.card'), 'flip')">↻</button>
+                    <button class="card__btn card__btn--spin" title="Spin Card" onclick="rotateCard(this.closest('.card'), 'spin')">⟲</button>
+                    <button class="card__btn card__btn--wobble" title="Wobble Card" onclick="rotateCard(this.closest('.card'), 'wobble')">～</button>
+                  </div>
+                </div>
+              </div>
+              <div class="carousel__cell">
+                <div class="card" style="--img: url(../assets/FeelingFinder/happy.png)" data-rotation-type="spin">
+                  <div class="card__face card__face--front"></div>
+                  <div class="card__face card__face--back"></div>
+                  <div class="card__controls">
+                    <button class="card__btn card__btn--flip" title="Flip Card" onclick="rotateCard(this.closest('.card'), 'flip')">↻</button>
+                    <button class="card__btn card__btn--spin" title="Spin Card" onclick="rotateCard(this.closest('.card'), 'spin')">⟲</button>
+                    <button class="card__btn card__btn--wobble" title="Wobble Card" onclick="rotateCard(this.closest('.card'), 'wobble')">～</button>
+                  </div>
+                </div>
+              </div>
+              <div class="carousel__cell">
+                <div class="card" style="--img: url(../assets/FeelingFinder/mad.png)" data-rotation-type="wobble">
+                  <div class="card__face card__face--front"></div>
+                  <div class="card__face card__face--back"></div>
+                  <div class="card__controls">
+                    <button class="card__btn card__btn--flip" title="Flip Card" onclick="rotateCard(this.closest('.card'), 'flip')">↻</button>
+                    <button class="card__btn card__btn--spin" title="Spin Card" onclick="rotateCard(this.closest('.card'), 'spin')">⟲</button>
+                    <button class="card__btn card__btn--wobble" title="Wobble Card" onclick="rotateCard(this.closest('.card'), 'wobble')">～</button>
+                  </div>
+                </div>
+              </div>
+              <div class="carousel__cell">
+                <div class="card" style="--img: url(../assets/FeelingFinder/scared.png)" data-rotation-type="flip">
+                  <div class="card__face card__face--front"></div>
+                  <div class="card__face card__face--back"></div>
+                  <div class="card__controls">
+                    <button class="card__btn card__btn--flip" title="Flip Card" onclick="rotateCard(this.closest('.card'), 'flip')">↻</button>
+                    <button class="card__btn card__btn--spin" title="Spin Card" onclick="rotateCard(this.closest('.card'), 'spin')">⟲</button>
+                    <button class="card__btn card__btn--wobble" title="Wobble Card" onclick="rotateCard(this.closest('.card'), 'wobble')">～</button>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="carousel__cell">
-              <div class="card" style="--img: url(../assets/feelingfinder2.png)" data-rotation-type="spin">
-                <div class="card__face card__face--front"></div>
-                <div class="card__face card__face--back"></div>
-                <div class="card__controls">
-                  <button class="card__btn card__btn--flip" title="Flip Card" onclick="rotateCard(this.closest('.card'), 'flip')">↻</button>
-                  <button class="card__btn card__btn--spin" title="Spin Card" onclick="rotateCard(this.closest('.card'), 'spin')">⟲</button>
-                  <button class="card__btn card__btn--wobble" title="Wobble Card" onclick="rotateCard(this.closest('.card'), 'wobble')">～</button>
-                </div>
-              </div>
-            </div>
-            <div class="carousel__cell">
-              <div class="card" style="--img: url(../assets/happymonster1.png)" data-rotation-type="wobble">
-                <div class="card__face card__face--front"></div>
-                <div class="card__face card__face--back"></div>
-                <div class="card__controls">
-                  <button class="card__btn card__btn--flip" title="Flip Card" onclick="rotateCard(this.closest('.card'), 'flip')">↻</button>
-                  <button class="card__btn card__btn--spin" title="Spin Card" onclick="rotateCard(this.closest('.card'), 'spin')">⟲</button>
-                  <button class="card__btn card__btn--wobble" title="Wobble Card" onclick="rotateCard(this.closest('.card'), 'wobble')">～</button>
-                </div>
-              </div>
-            </div>
-            <div class="carousel__cell">
-              <div class="card" style="--img: url(../assets/gallery.png)" data-rotation-type="flip">
-                <div class="card__face card__face--front"></div>
-                <div class="card__face card__face--back"></div>
-                <div class="card__controls">
-                  <button class="card__btn card__btn--flip" title="Flip Card" onclick="rotateCard(this.closest('.card'), 'flip')">↻</button>
-                  <button class="card__btn card__btn--spin" title="Spin Card" onclick="rotateCard(this.closest('.card'), 'spin')">⟲</button>
-                  <button class="card__btn card__btn--wobble" title="Wobble Card" onclick="rotateCard(this.closest('.card'), 'wobble')">～</button>
-                </div>
-              </div>
-            </div>
-            <div class="carousel__cell">
-              <div class="card" style="--img: url(../assets/happy.png)" data-rotation-type="spin">
-                <div class="card__face card__face--front"></div>
-                <div class="card__face card__face--back"></div>
-                <div class="card__controls">
-                  <button class="card__btn card__btn--flip" title="Flip Card" onclick="rotateCard(this.closest('.card'), 'flip')">↻</button>
-                  <button class="card__btn card__btn--spin" title="Spin Card" onclick="rotateCard(this.closest('.card'), 'spin')">⟲</button>
-                  <button class="card__btn card__btn--wobble" title="Wobble Card" onclick="rotateCard(this.closest('.card'), 'wobble')">～</button>
-                </div>
-              </div>
-            </div>
-            <div class="carousel__cell">
-              <div class="card" style="--img: url(../assets/scared.png)" data-rotation-type="wobble">
-                <div class="card__face card__face--front"></div>
-                <div class="card__face card__face--back"></div>
-                <div class="card__controls">
-                  <button class="card__btn card__btn--flip" title="Flip Card" onclick="rotateCard(this.closest('.card'), 'flip')">↻</button>
-                  <button class="card__btn card__btn--spin" title="Spin Card" onclick="rotateCard(this.closest('.card'), 'spin')">⟲</button>
-                  <button class="card__btn card__btn--wobble" title="Wobble Card" onclick="rotateCard(this.closest('.card'), 'wobble')">～</button>
-                </div>
-              </div>
-            </div>
-            <div class="carousel__cell">
-              <div class="card" style="--img: url(../assets/character.png)" data-rotation-type="flip">
-                <div class="card__face card__face--front"></div>
-                <div class="card__face card__face--back"></div>
-                <div class="card__controls">
-                  <button class="card__btn card__btn--flip" title="Flip Card" onclick="rotateCard(this.closest('.card'), 'flip')">↻</button>
-                  <button class="card__btn card__btn--spin" title="Spin Card" onclick="rotateCard(this.closest('.card'), 'spin')">⟲</button>
-                  <button class="card__btn card__btn--wobble" title="Wobble Card" onclick="rotateCard(this.closest('.card'), 'wobble')">～</button>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>        
         <!-- Carousel 2 -->
         <div class="scene">
@@ -390,69 +358,70 @@
     <!-- / Gallery Section -->
     <div class="preview-wrapper">
       <div class="preview" id="preview-1">
-        <header class="preview__header">
-          <h2 class="preview__title"><span>Expression Connection</span></h2>
+        <header class="preview__header" style="display: flex; align-items: center; justify-content: space-between; gap: 1rem;">
+          <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+            <h2 class="preview__title">
+              <span class="feelingfinder" style="display: flex; align-items: center; justify-content: flex-start; font-size: 1.5em;">
+                <img src="assets/FeelingFinder/logo.png" alt="Feeling Finder Logo" style="height: 2em; vertical-align: middle; margin-right: 0.5em;">Feeling Finder
+              </span>
+            </h2>
+            <p style="margin: 0; font-size: 0.9em; color: #666; max-width: 400px;">Feeling Finder uses AI to help neurodivergent people understand emotions and feelings.</p>
+          </div>
           <button class="preview__close">Close ×</button>
         </header>
         <div class="grid">
           <figure aria-labelledby="caption1" class="grid__item" role="img">
-            <div class="grid__item-image" style="background-image: url(assets/expression-connection-thumb.png)"></div>
+            <div class="grid__item-image" style="background-image: url(assets/FeelingFinder/COVER.png)"></div>
             <figcaption class="grid__item-caption" id="caption1">
-              <h3>Expression Connection</h3>
+              <h3>Cover</h3>
             </figcaption>
           </figure>
           <figure aria-labelledby="caption2" class="grid__item" role="img">
-            <div class="grid__item-image" style="background-image: url(assets/expression-connection-thumb2.png)"></div>
+            <div class="grid__item-image" style="background-image: url(assets/FeelingFinder/logo.png)"></div>
             <figcaption class="grid__item-caption" id="caption2">
-              <h3>Connection Thumb 2</h3>
+              <h3>Logo</h3>
             </figcaption>
           </figure>
           <figure aria-labelledby="caption3" class="grid__item" role="img">
-            <div class="grid__item-image" style="background-image: url(assets/feelingfinder2.png)"></div>
+            <div class="grid__item-image" style="background-image: url(assets/FeelingFinder/mock.png)"></div>
             <figcaption class="grid__item-caption" id="caption3">
-              <h3>Feeling Finder</h3>
+              <h3>Mock</h3>
             </figcaption>
           </figure>
           <figure aria-labelledby="caption4" class="grid__item" role="img">
-            <div class="grid__item-image" style="background-image: url(assets/gallery.png)"></div>
+            <div class="grid__item-image" style="background-image: url(assets/FeelingFinder/prompt.png)"></div>
             <figcaption class="grid__item-caption" id="caption4">
-              <h3>Gallery</h3>
+              <h3>Prompt</h3>
             </figcaption>
           </figure>
           <figure aria-labelledby="caption5" class="grid__item" role="img">
-            <div class="grid__item-image" style="background-image: url(assets/happymonster1.png)"></div>
+            <div class="grid__item-image" style="background-image: url(assets/FeelingFinder/happy.png)"></div>
             <figcaption class="grid__item-caption" id="caption5">
-              <h3>Happy Monster</h3>
-            </figcaption>
-          </figure>
-          <figure aria-labelledby="caption6" class="grid__item" role="img">
-            <div class="grid__item-image" style="background-image: url(assets/happymonstersprite.png)"></div>
-            <figcaption class="grid__item-caption" id="caption6">
-              <h3>Happy Monster Sprite</h3>
-            </figcaption>
-          </figure>
-          <figure aria-labelledby="caption7" class="grid__item" role="img">
-            <div class="grid__item-image" style="background-image: url(assets/mirromatch.png)"></div>
-            <figcaption class="grid__item-caption" id="caption7">
-              <h3>Mirror Match</h3>
-            </figcaption>
-          </figure>
-          <figure aria-labelledby="caption8" class="grid__item" role="img">
-            <div class="grid__item-image" style="background-image: url(assets/happy.png)"></div>
-            <figcaption class="grid__item-caption" id="caption8">
               <h3>Happy</h3>
             </figcaption>
           </figure>
-          <figure aria-labelledby="caption9" class="grid__item" role="img">
-            <div class="grid__item-image" style="background-image: url(assets/scared.png)"></div>
-            <figcaption class="grid__item-caption" id="caption9">
+          <figure aria-labelledby="caption6" class="grid__item" role="img">
+            <div class="grid__item-image" style="background-image: url(assets/FeelingFinder/mad.png)"></div>
+            <figcaption class="grid__item-caption" id="caption6">
+              <h3>Mad</h3>
+            </figcaption>
+          </figure>
+          <figure aria-labelledby="caption7" class="grid__item" role="img">
+            <div class="grid__item-image" style="background-image: url(assets/FeelingFinder/scared.png)"></div>
+            <figcaption class="grid__item-caption" id="caption7">
               <h3>Scared</h3>
             </figcaption>
           </figure>
-          <figure aria-labelledby="caption10" class="grid__item" role="img">
-            <div class="grid__item-image" style="background-image: url(assets/character.png)"></div>
-            <figcaption class="grid__item-caption" id="caption10">
-              <h3>Character</h3>
+          <figure aria-labelledby="caption8" class="grid__item" role="img">
+            <div class="grid__item-image" style="background-image: url(assets/FeelingFinder/sad.png)"></div>
+            <figcaption class="grid__item-caption" id="caption8">
+              <h3>Sad</h3>
+            </figcaption>
+          </figure>
+          <figure aria-labelledby="caption9" class="grid__item" role="img">
+            <div class="grid__item-image" style="background-image: url(assets/FeelingFinder/covercloseup.png)"></div>
+            <figcaption class="grid__item-caption" id="caption9">
+              <h3>Cover Closeup</h3>
             </figcaption>
           </figure>
         </div>
