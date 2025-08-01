@@ -22,7 +22,7 @@ Here, you'll find:
 I'm currently working as a **Principal UX & AI Experience Designer** at **LexisNexis Risk Soluions**, where I lead design initiatives with A.I. and big data across the insurance, healthcare, government and financial industries. 
 
 - **Accessibility Leadership** – Ensuring WCAG 2.1 AA+ compliance across all products
-- **UXDevOps Tools** – component pipelines from Axure/Figma to dev-ready handofff
+- **UXDevOps Tools** – component pipelines from Axure/Figma to dev-ready handoff
 - **AI Integration** – Designing augmented and AI experiences for our stakeholders
 - **Design Systems for AI Products** – Building component libraries and design tokens for AI-powered applications
 - **Conversational UX** – Designing interfaces that bridge human-AI interaction gaps
@@ -36,7 +36,7 @@ I'm currently focused on **AI-powered UX design systems** and **inclusive techno
 I founded **A.I.dvocate** to rethink how AI can support patients, providers and parents of disabled children, neurodivergent users, and frontline community responders navigate through the maze of health insurance policies. 
 
 ## Some ongoing projects:
-- **Mirror Match (Expression Connection)** – an emotional recognition game built for the neurodiverse community
+- **Feeling Finder (Formally Ex Connection)** – an emotional recognition game built for the neurodiverse community
 - **CommuniSense** – social signal intelligence for real-time crisis awareness
 - **The Dorkinator** – plain language → Google dork converter for OSINT and investigations
 - **Civic Technology** – Building tools that help communities and frontline responders
