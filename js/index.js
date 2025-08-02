@@ -840,3 +840,57 @@ preloadImages('.grid__item-image').then(() => {
 
 // Make rotateCard function globally available for onclick handlers
 window.rotateCard = rotateCard;
+
+// Image Preview Modal Functionality
+const initImagePreviewModal = () => {
+  const modal = document.getElementById('image-preview-modal');
+  const modalImage = document.getElementById('modal-image');
+  const modalTitle = document.getElementById('modal-title');
+  const modalClose = document.querySelector('.modal-close');
+  const gridItems = document.querySelectorAll('.grid__item[data-image]');
+
+  // Open modal
+  const openModal = (imageSrc, title) => {
+    modalImage.src = imageSrc;
+    modalTitle.textContent = title;
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden'; // Prevent background scroll
+  };
+
+  // Close modal
+  const closeModal = () => {
+    modal.style.display = 'none';
+    document.body.style.overflow = ''; // Restore scroll
+  };
+
+  // Event listeners for grid items
+  gridItems.forEach(item => {
+    item.addEventListener('click', () => {
+      const imageSrc = item.dataset.image;
+      const title = item.dataset.title;
+      openModal(imageSrc, title);
+    });
+  });
+
+  // Close modal on button click
+  modalClose.addEventListener('click', closeModal);
+
+  // Close modal on background click
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+
+  // Close modal on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.style.display === 'flex') {
+      closeModal();
+    }
+  });
+};
+
+// Initialize image preview modal when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  initImagePreviewModal();
+});
