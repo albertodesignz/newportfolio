@@ -1122,4 +1122,91 @@ ul, ol, menu {
     }
 } 
 
+/* Dynamic Grid Styles */
+.dynamic-grid-item {
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dynamic-grid-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.grid__item-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 8px;
+}
+
+.dynamic-grid-item:hover .grid__item-overlay {
+  opacity: 1;
+}
+
+.preview-btn {
+  background: rgba(255,255,255,0.9);
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.preview-btn:hover {
+  background: white;
+  transform: scale(1.1);
+}
+
+/* Modal Styles */
+.image-preview-modal {
+  backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modal-close:hover {
+  color: #ff6b6b;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .dynamic-grid-item:hover {
+    transform: scale(1.02);
+  }
+  
+  .preview-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+} 
+
  
