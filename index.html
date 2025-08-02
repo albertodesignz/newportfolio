@@ -63,9 +63,52 @@
                   </li>
               </ul>
           </nav>
-          <button class="md:hidden text-gray-800 focus:outline-none ml-4" aria-label="Toggle navigation menu">
+          <button id="mobile-menu-toggle" class="md:hidden text-gray-800 focus:outline-none ml-4" aria-label="Toggle navigation menu">
               <i class="fas fa-bars text-xl"></i>
           </button>
+      </div>
+      
+      <!-- Mobile Navigation Backdrop -->
+      <div id="mobile-nav-backdrop" class="mobile-nav-backdrop"></div>
+      
+      <!-- Mobile Navigation Menu -->
+      <div id="mobile-nav" class="mobile-nav fixed top-0 right-0 h-full w-64 bg-white shadow-lg z-40 transform translate-x-full transition-transform duration-300 ease-in-out">
+          <div class="flex flex-col h-full">
+              <div class="flex justify-between items-center p-4 border-b border-gray-200">
+                  <h3 class="text-lg font-semibold text-gray-800">Menu</h3>
+                  <button id="mobile-menu-close" class="text-gray-500 hover:text-gray-700 text-2xl">
+                      <i class="fas fa-times"></i>
+                  </button>
+              </div>
+              <nav class="flex-1 p-4">
+                  <ul class="space-y-4">
+                      <li>
+                          <a href="https://www.linkedin.com/in/albertodesignz/" target="_blank" rel="noopener noreferrer" class="flex items-center text-gray-700 hover:text-blue-600 transition-colors">
+                              <i class="fab fa-linkedin text-xl mr-3"></i>
+                              <span>LinkedIn</span>
+                          </a>
+                      </li>
+                      <li>
+                          <a href="https://medium.com/@albertodesignz" target="_blank" rel="noopener noreferrer" class="flex items-center text-gray-700 hover:text-gray-900 transition-colors">
+                              <i class="fab fa-medium text-xl mr-3"></i>
+                              <span>Medium</span>
+                          </a>
+                      </li>
+                      <li>
+                          <a href="https://github.com/albertodesignz" target="_blank" rel="noopener noreferrer" class="flex items-center text-gray-700 hover:text-gray-900 transition-colors">
+                              <i class="fab fa-github text-xl mr-3"></i>
+                              <span>GitHub</span>
+                          </a>
+                      </li>
+                      <li>
+                          <button id="mobile-info-btn" class="flex items-center text-gray-700 hover:text-gray-900 transition-colors w-full text-left">
+                              <i class="fas fa-info-circle text-xl mr-3"></i>
+                              <span>About</span>
+                          </button>
+                      </li>
+                  </ul>
+              </nav>
+          </div>
       </div>
       <section class="flex flex-col md:flex-row justify-between bg-gray-100 border-top gap-2 mt-4">
         <div class="w-full border-top border-dark">

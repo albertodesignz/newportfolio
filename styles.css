@@ -914,10 +914,42 @@ ul, ol, menu {
 .mobile-nav {
     transform: translateX(100%);
     transition: transform 0.3s ease-in-out;
+    z-index: 1000;
+    display: none; /* Hide by default */
 }
 
 .mobile-nav.active {
     transform: translateX(0);
+    display: block; /* Show when active */
+}
+
+/* Mobile menu backdrop */
+.mobile-nav-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    display: none; /* Hide by default */
+}
+
+.mobile-nav-backdrop.active {
+    opacity: 1;
+    visibility: visible;
+    display: block; /* Show when active */
+}
+
+/* Only show mobile nav on mobile devices */
+@media (min-width: 768px) {
+    .mobile-nav,
+    .mobile-nav-backdrop {
+        display: none !important;
+    }
 }
 
 /* ===== RESPONSIVE DESIGN ===== */

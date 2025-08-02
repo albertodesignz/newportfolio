@@ -849,31 +849,71 @@ const initImagePreviewModal = () => {
   const modalClose = document.querySelector('.modal-close');
   const gridItems = document.querySelectorAll('.grid__item[data-image]');
 
+  let touchStartY = 0;
+  let touchEndY = 0;
+
   // Open modal
   const openModal = (imageSrc, title) => {
     modalImage.src = imageSrc;
     modalTitle.textContent = title;
     modal.style.display = 'flex';
     document.body.style.overflow = 'hidden'; // Prevent background scroll
+    
+    // Add entrance animation
+    gsap.fromTo(modal, 
+      { opacity: 0, scale: 0.9 },
+      { opacity: 1, scale: 1, duration: 0.3, ease: "power2.out" }
+    );
   };
 
   // Close modal
   const closeModal = () => {
-    modal.style.display = 'none';
-    document.body.style.overflow = ''; // Restore scroll
+    gsap.to(modal, {
+      opacity: 0,
+      scale: 0.9,
+      duration: 0.2,
+      ease: "power2.in",
+      onComplete: () => {
+        modal.style.display = 'none';
+        document.body.style.overflow = ''; // Restore scroll
+      }
+    });
   };
 
   // Event listeners for grid items
   gridItems.forEach(item => {
-    item.addEventListener('click', () => {
+    // Click event
+    item.addEventListener('click', (e) => {
+      e.preventDefault();
       const imageSrc = item.dataset.image;
       const title = item.dataset.title;
       openModal(imageSrc, title);
     });
+
+    // Touch events for better mobile interaction
+    item.addEventListener('touchstart', (e) => {
+      touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    item.addEventListener('touchend', (e) => {
+      touchEndY = e.changedTouches[0].clientY;
+      const touchDiff = Math.abs(touchStartY - touchEndY);
+      
+      // Only open modal if it's a tap (not a swipe)
+      if (touchDiff < 10) {
+        const imageSrc = item.dataset.image;
+        const title = item.dataset.title;
+        openModal(imageSrc, title);
+      }
+    }, { passive: true });
   });
 
   // Close modal on button click
-  modalClose.addEventListener('click', closeModal);
+  modalClose.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    closeModal();
+  });
 
   // Close modal on background click
   modal.addEventListener('click', (e) => {
@@ -888,9 +928,162 @@ const initImagePreviewModal = () => {
       closeModal();
     }
   });
+
+  // Touch events for modal close on swipe down
+  modal.addEventListener('touchstart', (e) => {
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+
+  modal.addEventListener('touchmove', (e) => {
+    if (e.target === modal) {
+      const currentY = e.touches[0].clientY;
+      const diff = currentY - touchStartY;
+      
+      if (diff > 50) { // Swipe down threshold
+        closeModal();
+      }
+    }
+  }, { passive: true });
+
+  // Prevent zoom on double tap for images
+  modalImage.addEventListener('dblclick', (e) => {
+    e.preventDefault();
+  });
+
+  // Add haptic feedback for mobile devices
+  const addHapticFeedback = () => {
+    if ('vibrate' in navigator) {
+      navigator.vibrate(10);
+    }
+  };
+
+  // Add haptic feedback to grid item clicks
+  gridItems.forEach(item => {
+    item.addEventListener('click', addHapticFeedback);
+    item.addEventListener('touchend', addHapticFeedback);
+  });
 };
 
 // Initialize image preview modal when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
   initImagePreviewModal();
+});
+
+// Mobile Menu Functionality
+const initMobileMenu = () => {
+  const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+  const mobileMenuClose = document.getElementById('mobile-menu-close');
+  const mobileNav = document.getElementById('mobile-nav');
+  const mobileNavBackdrop = document.getElementById('mobile-nav-backdrop');
+  const mobileInfoBtn = document.getElementById('mobile-info-btn');
+  const infoBtn = document.getElementById('info-btn');
+  const infoModal = document.getElementById('info-modal');
+  const closeModal = document.getElementById('close-modal');
+
+  // Check if we're on mobile
+  const isMobile = () => window.innerWidth < 768;
+
+  // Open mobile menu
+  const openMobileMenu = () => {
+    if (!isMobile()) return; // Only work on mobile
+    mobileNav.style.display = 'block';
+    mobileNavBackdrop.style.display = 'block';
+    // Force reflow before adding active class
+    mobileNav.offsetHeight;
+    mobileNav.classList.add('active');
+    mobileNavBackdrop.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Prevent background scroll
+  };
+
+  // Close mobile menu
+  const closeMobileMenu = () => {
+    mobileNav.classList.remove('active');
+    mobileNavBackdrop.classList.remove('active');
+    // Hide after animation completes
+    setTimeout(() => {
+      mobileNav.style.display = 'none';
+      mobileNavBackdrop.style.display = 'none';
+    }, 300);
+    document.body.style.overflow = ''; // Restore scroll
+  };
+
+  // Event listeners
+  if (mobileMenuToggle) {
+    mobileMenuToggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      openMobileMenu();
+    });
+  }
+
+  if (mobileMenuClose) {
+    mobileMenuClose.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      closeMobileMenu();
+    });
+  }
+
+  // Close menu when clicking backdrop
+  if (mobileNavBackdrop) {
+    mobileNavBackdrop.addEventListener('click', (e) => {
+      if (e.target === mobileNavBackdrop) {
+        closeMobileMenu();
+      }
+    });
+  }
+
+  // Close menu on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && mobileNav.classList.contains('active')) {
+      closeMobileMenu();
+    }
+  });
+
+  // Close menu on window resize to desktop
+  window.addEventListener('resize', () => {
+    if (!isMobile() && mobileNav.classList.contains('active')) {
+      closeMobileMenu();
+    }
+  });
+
+  // Mobile info button functionality
+  if (mobileInfoBtn && infoModal) {
+    mobileInfoBtn.addEventListener('click', () => {
+      closeMobileMenu(); // Close mobile menu first
+      infoModal.classList.remove('hidden');
+      infoModal.classList.add('flex');
+    });
+  }
+
+  // Close info modal functionality (if not already implemented)
+  if (closeModal && infoModal) {
+    closeModal.addEventListener('click', () => {
+      infoModal.classList.add('hidden');
+      infoModal.classList.remove('flex');
+    });
+  }
+
+  // Close info modal when clicking outside
+  if (infoModal) {
+    infoModal.addEventListener('click', (e) => {
+      if (e.target === infoModal) {
+        infoModal.classList.add('hidden');
+        infoModal.classList.remove('flex');
+      }
+    });
+  }
+
+  // Desktop info button functionality (if not already implemented)
+  if (infoBtn && infoModal) {
+    infoBtn.addEventListener('click', () => {
+      infoModal.classList.remove('hidden');
+      infoModal.classList.add('flex');
+    });
+  }
+};
+
+// Initialize mobile menu when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  initMobileMenu();
 });
