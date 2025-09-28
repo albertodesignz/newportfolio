@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- =========================================== -->
+    <!-- HEAD SECTION - Document Metadata & Dependencies -->
+    <!-- =========================================== -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Albert Vargas - Portfolio</title>
@@ -28,6 +31,9 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body class="bg-gray-100 min-h-screen">
+    <!-- =========================================== -->
+    <!-- HEADER SECTION - Navigation & Branding -->
+    <!-- =========================================== -->
     <header id="header" class="header-container py-4 px-4 bg-white shadow-sm">
         <div class="container mx-auto flex flex-row items-center justify-between">
             <div class="flex-1">
@@ -75,7 +81,11 @@
         </div>
     </header>
 
+    <!-- =========================================== -->
+    <!-- MAIN CONTENT SECTION -->
+    <!-- =========================================== -->
     <main class="container mx-auto mt-4">
+        <!-- Hero/Introduction Section -->
         <section class="flex flex-col md:flex-row justify-between gap-2 mb-4">
             <div class="w-full">
                 <h2 class="text-3xl md:text-3xl text-gray-800 mb-6">
@@ -93,12 +103,37 @@
         </section>
 
 
+        <!-- Midjourney Early Experiment Section -->
+        <section class="bg-gray-50 py-2 sm:py-2 mb-6">
+            <div class="mx-auto max-w-2xl px-2 lg:max-w-7xl lg:px-2">
+                <div class="mt-10 grid gap-4 sm:mt-2 lg:grid-cols-1 lg:grid-rows-1">
+                    <div class="relative flex flex-col">
+                        <div class="absolute inset-px rounded-3xl bg-white shadow"></div>
+                        <div class="relative flex flex-col overflow-hidden rounded-3xl p-6 h-full">
+                            <!-- Project: Midjourney Early Experiment -->
+                            <div class="mb-4">
+                                <p class="text-2xl font-bold tracking-tight text-gray-950">Midjourney Early Experiments</p>
+                                <p class="max-w-lg text-sm/6 text-gray-600">I started working with Midjourney in October 2022, by November I was experimenting with typographical letters, starting with the letter A</p>
+                            </div>
+                            <div class="grid grid-cols-1 grid-rows-1 gap-3 aspect-[3/2] h-full">
+                                <div class="col-span-1 row-span-1 bg-gray-200 rounded-2xl shadow overflow-hidden flex">
+                                    <img class="object-cover w-full h-full" src="assets/personalwork/earlyexperiements.gif" alt="Midjourney Early Experiment">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Projects Section -->
         <section class="bg-gray-50 py-2 sm:py-2 mb-6">
             <div class="mx-auto max-w-2xl px-2 lg:max-w-7xl lg:px-2">
                 <div class="mt-10 grid gap-4 sm:mt-2 lg:grid-cols-3 lg:grid-rows-1">
                     <div class="relative flex flex-col">
                         <div class="absolute inset-px rounded-3xl bg-white shadow"></div>
                         <div class="relative flex flex-col overflow-hidden rounded-3xl p-6 h-full">
+                            <!-- Project: The Shape of Things -->
                             <div class="mb-4">
                                 <p class="text-2xl font-bold tracking-tight text-gray-950">The Shape of Things</p>
                                 <p class="max-w-lg text-sm/6 text-gray-600">This is an ongoing exploration of different geometric shapes and interactions.</p>
@@ -116,6 +151,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Project: Feeling Finder -->
                     <div class="relative flex flex-col">
                         <div class="absolute inset-px rounded-3xl bg-white shadow"></div>
                         <div class="relative flex flex-col overflow-hidden rounded-3xl p-6">
@@ -141,7 +177,10 @@
                 </div>
             </div>
         </section>
+        
+        <!-- Additional Content Section - Random Ideas & About Me -->
         <section class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-6">
+            <!-- Random Ideas & Widgets Card -->
             <div class="bg-white rounded-3xl shadow p-6 flex flex-col h-full">
                 <h3 class="text-2xl font-bold mb-4 text-gray-900">Random ideas, designs and widgets</h3>
                 <div class="grid grid-cols-3 grid-rows-1 gap-3 aspect-[3/2]">
@@ -154,6 +193,7 @@
                     
                 </div>
             </div>
+            <!-- About Me Card -->
             <div class="bg-white rounded-3xl shadow p-6 flex flex-col justify-center h-full">
                 <h3 class="text-2xl font-bold mb-4 text-gray-900">About Me</h3>
                 <p class="text-gray-700 mb-2">Hi, I'm Albert Vargas, a Principal UX Designer II at Lexis Nexis Risk Solutions. I love exploring new ideas, prototyping creative widgets, and building delightful user experiences.</p>
@@ -165,6 +205,10 @@
 
     </main>
 
+    <!-- =========================================== -->
+    <!-- FIXED CONTACT ELEMENTS -->
+    <!-- =========================================== -->
+    
     <!-- Contact Button -->
     <div id="contact-btn" class="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-50">
         <a href="mailto:albertlazarovargas@gmail.com" class="bg-darkblue text-white w-14 h-14 md:w-16 md:h-16 rounded-full shadow-lg flex items-center justify-center hover:opacity-90 transition-opacity" aria-label="Contact me" title="Contact me">
