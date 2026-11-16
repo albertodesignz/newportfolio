@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#f7f7f4" />
+  <meta name="description" content="FRAGMENTED: Adobe Aileron Black-to-Ultralight typography, a dark-to-light gray gradient, fluid touch ripples, and looping Three.js disintegration." />
+  <title>FRAGMENTED — Fluid Typography</title>
+  <!-- Font served by Adobe Fonts; no font files are copied or self-hosted. -->
+  <link rel="stylesheet" href="https://use.typekit.net/rib4vps.css" />
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f7f4;
+      --ink: #34363a;
+      --type-start: #25272b;
+      --type-end: #babfc6;
+    }
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --bg: #101215;
+      --ink: #e6e7ea;
+      --type-start: #838992;
+      --type-end: #edf0f2;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; width: 100%; min-height: 100%; }
+    html { background: var(--bg); }
+    body {
+      min-height: 100svh; overflow: hidden;
+      background: var(--bg); color: var(--ink);
+      font-family: "aileron", "Helvetica Neue", Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 350ms ease, color 350ms ease;
+    }
+    button { font: inherit; }
+    button { cursor: pointer; }
+    #stage, #art { position: fixed; inset: 0; width: 100%; height: 100%; }
+    #stage { z-index: 1; overflow: hidden; touch-action: none; cursor: crosshair; }
+    #art { display: block; outline: none; }
+    #backup {position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none;}
+    #backup[hidden] {display:none;}
+    body.fallback-ready .fallback {opacity:0;}
+    .fallback {
+      position: absolute; left: 50%; top: 49.6%;
+      transform: translate(-50%,-50%);
+      display: flex; align-items: center; justify-content: center;
+      white-space: nowrap; width: 92%; pointer-events: none;
+      transition: opacity 180ms ease;
+      background-image: linear-gradient(90deg, var(--type-start), var(--type-end));
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      -webkit-background-clip: text;
+    }
+    .fallback span { display: inline-block; line-height: .95; font-size: clamp(30px, 8vw, 126px); transform-origin: bottom center; }
+    .fallback span:nth-child(-n+3) { font-weight: 900; }
+    .fallback span:nth-child(n+4):nth-child(-n+6) { font-weight: 600; }
+    .fallback span:nth-child(7), .fallback span:nth-child(8) { font-weight: 300; }
+    .fallback span:nth-child(n+9) { font-weight: 100; }
+    .fallback span:nth-child(2) { transform: scale(.92, 1.1); }
+    .fallback span:nth-child(3) { transform: scale(1.06, .89); }
+    .fallback span:nth-child(4) { transform: scale(.88, 1.12); }
+    .fallback span:nth-child(5) { transform: scale(1.09, .94); }
+    .fallback span:nth-child(6) { transform: scale(.94, 1.08); }
+    .fallback span:nth-child(7) { transform: scale(.90, .96); }
+    .fallback span:nth-child(8) { transform: scale(.83, 1.16); }
+    .fallback span:nth-child(9) { transform: scale(.96, .93); }
+    .fallback span:nth-child(10) { transform: scale(.89, 1.12); }
+    body.is-ready .fallback { opacity: 0; }
+    .header {
+      position: fixed; z-index: 4; top: 28px; right: 32px;
+      display: flex; justify-content: flex-end;
+      pointer-events: none;
+    }
+    #theme-toggle {
+      pointer-events: auto; position: relative;
+      width: 35px; height: 35px; margin: -6px -8px 0 0;
+      border: none; background: transparent; color: var(--ink);
+      opacity: .65; display: grid; place-items: center;
+      transition: opacity 220ms ease, transform 220ms ease;
+    }
+    #theme-toggle:hover, #theme-toggle:focus-visible { opacity: 1; }
+    #theme-toggle:focus-visible { outline: 1px solid var(--ink); outline-offset: 2px; }
+    #theme-toggle svg { width: 19px; height: 19px; stroke: currentColor; fill: none; stroke-width: 1.15; stroke-linecap: round; stroke-linejoin: round; }
+    .icon-sun { display: none; }
+    html[data-theme="dark"] .icon-sun { display: block; }
+    html[data-theme="dark"] .icon-moon { display: none; }
+    .screenreader { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+    @media (max-width: 690px) {
+      .header { top: 18px; right: 21px; }
+      #theme-toggle { width: 44px; height: 44px; margin: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }
+  </style>
+</head>
+<body>
+  <main id="stage" aria-label="FRAGMENTED typography. The final four letters dissolve into particles and return. Moving a mouse or finger creates fluid ripples across the word.">
+    <canvas id="art" aria-hidden="true"></canvas>
+    <canvas id="backup" aria-hidden="true"></canvas>
+    <div class="fallback" aria-hidden="true"><span>F</span><span>R</span><span>A</span><span>G</span><span>M</span><span>E</span><span>N</span><span>T</span><span>E</span><span>D</span></div>
+  </main>
+  <header class="header">
+    <button id="theme-toggle" type="button" aria-label="Switch to dark mode" title="Toggle light and dark mode">
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.4 14.2A8.6 8.6 0 0 1 9.8 3.6a8.7 8.7 0 1 0 10.6 10.6Z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2.2M12 19.8V22M4.93 4.93 6.5 6.5m11 11 1.57 1.57M2 12h2.2M19.8 12H22M4.93 19.07 6.5 17.5m11-11 1.57-1.57"/></svg>
+    </button>
+  </header>
+  <span id="live" class="screenreader" aria-live="polite"></span>
+<script>
+/* Zero-dependency animation engine: stays active when CDN, modules or WebGL fail. */
+(() => {
+  const canvas = document.getElementById('backup');
+  const stage = document.getElementById('stage');
+  const ctx = canvas.getContext('2d', {alpha:true});
+  if (!ctx) return;
+  const chars = 'FRAGMENTED'.split('');
+  const settings = [
+    [900,1.00,1.02,0], [900,.89,1.15,-.035], [900,1.07,.91,.025],
+    [600,.92,1.16,-.02], [600,1.13,.98,0], [600,.88,1.10,-.012],
+    [300,.92,.93,.035], [300,.79,1.19,-.025], [100,1.01,.95,.02],
+    [100,.89,1.12,-.012]
+  ];
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const active = new Map();
+  const wake = [];
+  const off = document.createElement('canvas');
+  const oc = off.getContext('2d', {willReadFrequently:true});
+  let width = 0, height = 0, dpr = 1, boxW = 0, boxH = 0, split = 0, end = 0;
+  let tiles = [], points = [], timeOrigin = 0, lastFrame = 0, playing = true;
+  let spriteX = 0, spriteY = 0, fontSize = 100, padLeft = 0;
+  const rnd = (a,b) => {let h = Math.sin(a*127.1+b*311.7)*43758.5453; return h-Math.floor(h);};
+  const clamp = (v,min,max) => Math.max(min,Math.min(max,v));
+  const ease = (v) => {v=clamp(v,0,1);return v*v*(3-2*v);};
+  const motion = (t) => {
+    const cycle=((t%10.0)+10.0)%10.0;
+    if(cycle<1.1)return 0;
+    if(cycle<4.25)return ease((cycle-1.1)/3.15);
+    if(cycle<5.35)return 1;
+    if(cycle<8.35)return 1-ease((cycle-5.35)/3.0);
+    return 0;
+  };
+  function makeSprite(){
+    // Draw actual Adobe Web Font to the offscreen canvas when available.
+    const test=document.createElement('canvas').getContext('2d');
+    const widthFor = fs => settings.reduce((sum,p,i)=>{
+      test.font=`${p[0]} ${fs}px aileron, Arial, sans-serif`;
+      return sum+test.measureText(chars[i]).width*p[1]+fs*.005;
+    },0);
+    fontSize=Math.min(182, height*.29, width*.17);
+    while(widthFor(fontSize) > width * (width<560?.94:.87) && fontSize>16)fontSize*=.96;
+    fontSize=Math.max(13,fontSize);
+    const pad=Math.max(38,fontSize*.6);
+    padLeft=pad;
+    boxW=Math.ceil(widthFor(fontSize)+pad*2);
+    boxH=Math.ceil(fontSize*2.45);
+    off.width=boxW;
+    off.height=boxH;
+    oc.clearRect(0,0,boxW,boxH);
+    oc.fillStyle='#ffffff';oc.textAlign='left';oc.textBaseline='alphabetic';
+    const baseline=boxH*.5+fontSize*.33;
+    let x=pad;
+    settings.forEach((p,i)=>{
+      oc.font=`${p[0]} ${fontSize}px aileron, Arial, sans-serif`;
+      const w=oc.measureText(chars[i]).width*p[1];
+      if(i===6)split=x;
+      oc.save();oc.translate(x,baseline+p[3]*fontSize);oc.scale(p[1],p[2]);
+      oc.fillText(chars[i],0,0);oc.restore();x+=w+fontSize*.005;
+    });
+    end=x;
+    spriteX=(width-boxW)*.5;
+    spriteY=(height-boxH)*.5;
+    const pixels=oc.getImageData(0,0,boxW,boxH).data;
+    const size=fontSize<38?4:fontSize<72?6:8;
+    tiles=[];points=[];
+    for(let y=0;y<boxH;y+=size){
+      for(let x=0;x<boxW;x+=size){
+        const tw=Math.min(size,boxW-x),th=Math.min(size,boxH-y);
+        let found=false;
+        for(let py=y;py<y+th&&!found;py++){
+          for(let px=x;px<x+tw;px++){
+            if(pixels[(py*boxW+px)*4+3]>30){found=true;break;}
+          }
+        }
+        if(found)tiles.push({x,y,w:tw,h:th,right:x+tw*.5>=split,local:(x+tw*.5-split)/Math.max(1,end-split),seed:rnd(x,y)});
+      }
+    }
+    const step = width<580 ? 2.9 : 3.4;
+    for(let y=0;y<boxH;y+=step)for(let x=split;x<end;x+=step){
+      const px=Math.floor(x),py=Math.floor(y);
+      const a=pixels[(py*boxW+px)*4+3];
+      if(a < 130 || rnd(px,py)>.88)continue;
+      points.push({x,y,seed:rnd(px*3,py*7),seed2:rnd(px*5,py*11),local:(x-split)/(end-split)});
+    }
+  }
+  function resize(){
+    width=window.innerWidth;height=window.innerHeight;
+    dpr=Math.min(window.devicePixelRatio||1,2);
+    canvas.width=Math.round(width*dpr);canvas.height=Math.round(height*dpr);
+    canvas.style.width=width+'px';canvas.style.height=height+'px';
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    makeSprite();
+  }
+  function addWake(x,y,dx,dy,power=1){
+    wake.push({x,y,dx,dy,born:performance.now()/1000,power});
+    if(wake.length>15)wake.shift();
+  }
+  stage.addEventListener('pointerdown',e=>{
+    const p={x:e.clientX,y:e.clientY};active.set(e.pointerId,p);
+    try{stage.setPointerCapture(e.pointerId);}catch(_){}
+    addWake(p.x,p.y,0,0,2.0);
+  });
+  stage.addEventListener('pointermove',e=>{
+    if(reduced.matches)return;
+    if(e.pointerType==='touch'&&!active.has(e.pointerId))return;
+    const p={x:e.clientX,y:e.clientY};
+    const prior=active.get(e.pointerId)||stage.__lastHover;
+    const dx=prior?clamp(p.x-prior.x,-34,34):0;
+    const dy=prior?clamp(p.y-prior.y,-34,34):0;
+    if(Math.abs(dx)+Math.abs(dy)>.45)addWake(p.x,p.y,dx,dy,e.pointerType==='touch'||e.buttons?1.7:1.15);
+    stage.__lastHover=p;
+    if(active.has(e.pointerId))active.set(e.pointerId,p);
+  },{passive:true});
+  for(const type of ['pointerup','pointercancel'])stage.addEventListener(type,e=>active.delete(e.pointerId));
+  stage.addEventListener('pointerleave',()=>{stage.__lastHover=null;});
+  function displacement(x,y,now){
+    let tx=0,ty=0;
+    for(let i=0;i<wake.length;i++){
+      const w=wake[i],age=now-w.born;
+      if(age<0||age>2.4)continue;
+      const xx=x-w.x, yy=y-w.y;
+      const dist=Math.hypot(xx,yy)+.001;
+      const decay=Math.exp(-age*1.20)*w.power;
+      const core=Math.exp(-(dist*dist)/(155*155));
+      const movingWave=age*180;
+      const ring=Math.exp(-Math.pow((dist-movingWave)/69,2))*Math.sin((dist-movingWave)*.085);
+      const magnitude=39*ring*decay;
+      tx += xx/dist*magnitude + w.dx*1.9*core*decay;
+      ty += yy/dist*magnitude + w.dy*1.9*core*decay;
+      const sw=Math.sin(dist*.04-age*14)*core*8*decay;
+      tx += -yy/dist*sw; ty += xx/dist*sw;
+    }
+    const m=Math.hypot(tx,ty);
+    return m>70?[tx*70/m,ty*70/m]:[tx,ty];
+  }
+  function renderFrame(now){
+    if(!playing)return;
+    requestAnimationFrame(renderFrame);
+    if(now-lastFrame < 1000/50)return;
+    lastFrame=now;
+    const secs=now/1000;
+    if(!timeOrigin)timeOrigin=secs;
+    const dissolve=motion(secs-timeOrigin);
+    ctx.clearRect(0,0,width,height);
+    const style=getComputedStyle(document.documentElement);
+    const gradient=ctx.createLinearGradient(spriteX+padLeft,0,spriteX+end,0);
+    gradient.addColorStop(0,style.getPropertyValue('--type-start').trim()||'#25272b');
+    gradient.addColorStop(1,style.getPropertyValue('--type-end').trim()||'#babfc6');
+    // Draw original raster as small image patches, not a flat opacity mask.
+    // Tiles visibly bend around the drag wake and settle back into clean text.
+    for(let i=0;i<tiles.length;i++){
+      const t=tiles[i];
+      let opacity=1;
+      if(t.right){
+        const local=clamp(t.local,0,1);
+        const edge=-.15+dissolve*1.30;
+        const erosion=1-ease((local+(t.seed-.5)*.19-edge+.04)/.09);
+        opacity=1-.90*erosion;
+        if(opacity<.012)continue;
+      }
+      const x=spriteX+t.x, y=spriteY+t.y;
+      const v=reduced.matches?[0,0]:displacement(x+t.w*.5,y+t.h*.5,secs);
+      ctx.globalAlpha=opacity;
+      // White alpha-only source pixels are tinted using an offscreen ink compositor below.
+      ctx.drawImage(off,t.x,t.y,t.w,t.h,x+v[0],y+v[1],t.w+.2,t.h+.2);
+    }
+    ctx.globalAlpha=1;
+    // Recolor raster from white to the current theme without changing its alpha.
+    ctx.globalCompositeOperation='source-in';
+    ctx.fillStyle=gradient;
+    ctx.fillRect(0,0,width,height);
+    ctx.globalCompositeOperation='source-over';
+    // Detached fragments retain the original left-to-right color progression.
+    ctx.fillStyle=gradient;
+    if(dissolve>.07){
+      for(let i=0;i<points.length;i++){
+        const p=points[i];
+        const frontier=(.15+p.local)/1.30;
+        const age=dissolve-frontier;
+        if(age<=0)continue;
+        const progress=clamp(age/.48,0,1);
+        const alpha=Math.max(.10,.85-.75*ease(progress));
+        const stride=progress*Math.min(190,width*.26);
+        const x=spriteX+p.x - stride*(.3+p.seed*.7) + Math.sin(secs*1.1+p.seed2*15)*progress*22;
+        const y=spriteY+p.y - stride*(.5+p.seed2) + Math.cos(secs*.85+p.seed*13)*progress*14;
+        const d=reduced.matches?[0,0]:displacement(x,y,secs);
+        ctx.globalAlpha=alpha;
+        const r=.8+p.seed*1.4;
+        ctx.fillRect(x+d[0],y+d[1],r,r);
+      }
+    }
+    ctx.globalAlpha=1;
+    while(wake.length && secs-wake[0].born>2.4)wake.shift();
+  }
+  window.__fragmentedFallback={stop(){playing=false;canvas.hidden=true;},resume(){if(!playing){playing=true;canvas.hidden=false;lastFrame=0;requestAnimationFrame(renderFrame);}}};
+  resize();
+  window.addEventListener('resize',()=>{resize();});
+  // Rebuild samples when Adobe Fonts finishes loading, if available.
+  if(document.fonts){document.fonts.ready.then(()=>{if(playing)makeSprite();});}
+  document.body.classList.add('fallback-ready');
+  requestAnimationFrame(renderFrame);
+})();
+
+</script>
+<script type="module">
+(async () => {
+  const root = document.documentElement;
+  const themeButton = document.getElementById('theme-toggle');
+  const live = document.getElementById('live');
+  const stage = document.getElementById('stage');
+  const canvas = document.getElementById('art');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let theme = 'light';
+  try { theme = localStorage.getItem('fragmented-theme') || 'light'; } catch (_) {}
+  theme = theme === 'dark' ? 'dark' : 'light';
+  root.dataset.theme = theme;
+  function updateThemeButton() { themeButton.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'); }
+  updateThemeButton();
+  let updateInk = () => {};
+  themeButton.addEventListener('click', () => {
+    theme = theme === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = theme;
+    updateThemeButton(); updateInk();
+    try { localStorage.setItem('fragmented-theme', theme); } catch (_) {}
+  });
+
+  let THREE;
+  try {
+    THREE = await import('https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js');
+  } catch (error) {
+    console.error('Three.js could not load; displaying the typography fallback.', error);
+    live.textContent = 'Three.js unavailable; animated Canvas fallback is active.';
+    return;
+  }
+
+  // Only Adobe-hosted Aileron web fonts are used. Never fetch/copy the font binary.
+  try {
+    await Promise.race([
+      Promise.all([900,600,300,100].map(weight => document.fonts.load(`${weight} 80px "aileron"`))),
+      new Promise(resolve => setTimeout(resolve, 4000))
+    ]);
+  } catch (error) { console.warn('Adobe Font unavailable; using browser fallback.', error); }
+
+  const hasWebGL = (() => {
+    try { return Boolean(canvas.getContext('webgl2') || canvas.getContext('webgl')); }
+    catch (_) { return false; }
+  })();
+  if (!hasWebGL) {
+    live.textContent = 'WebGL unavailable; animated Canvas fallback is active.';
+    return;
+  }
+
+  let renderer;
+  try {
+    renderer = new THREE.WebGLRenderer({canvas, alpha: true, antialias: true, powerPreference: 'high-performance'});
+  } catch (error) {
+    console.error(error);
+    live.textContent = 'The GPU renderer could not start.';
+    return;
+  }
+  renderer.setClearColor(0x000000, 0);
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  const camera = new THREE.OrthographicCamera(-1,1,1,-1,0.1,100);
+  camera.position.z = 6;
+  const scene = new THREE.Scene();
+  const MAX_TRAILS = 12;
+  const trails = [];
+  const trailLocations = Array.from({length: MAX_TRAILS}, () => new THREE.Vector4(0,0,0,25));
+  const trailDirections = Array.from({length: MAX_TRAILS}, () => new THREE.Vector2(0,0));
+  const shared = {
+    uTime: {value: 0},
+    uDissolve: {value: 0},
+    uFlow: {value: 1.45},
+    uInkStart: {value: new THREE.Color('#25272b')},
+    uInkEnd: {value: new THREE.Color('#babfc6')},
+    uTrails: {value: trailLocations},
+    uDirections: {value: trailDirections},
+    uBrushRadius: {value: 108}
+  };
+  updateInk = () => {
+    shared.uInkStart.value.set(theme === 'dark' ? '#838992' : '#25272b');
+    shared.uInkEnd.value.set(theme === 'dark' ? '#edf0f2' : '#babfc6');
+  };
+  updateInk();
+
+  const glyphVertex = `
+    varying vec2 vUv;
+    void main() {
+      vUv = uv;
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    }
+  `;
+  const glyphFragment = `
+    precision highp float;
+    uniform sampler2D uTexture;
+    uniform vec2 uSize;
+    uniform vec2 uSplit;
+    uniform float uTime;
+    uniform float uDissolve;
+    uniform float uFlow;
+    uniform float uRight;
+    uniform float uBrushRadius;
+    uniform vec3 uInkStart;
+    uniform vec3 uInkEnd;
+    uniform vec2 uTextSpan;
+    uniform vec4 uTrails[${MAX_TRAILS}];
+    uniform vec2 uDirections[${MAX_TRAILS}];
+    varying vec2 vUv;
+    float hash21(vec2 p) { return fract(sin(dot(p, vec2(127.1,311.7)))*43758.5453); }
+    void main() {
+      vec2 pixel = (vUv-.5)*uSize;
+      vec2 displacement = vec2(0.0);
+      for (int i=0; i<${MAX_TRAILS}; i++) {
+        vec4 t = uTrails[i];
+        vec2 delta = pixel-t.xy;
+        float dist = length(delta);
+        float decay = exp(-t.w * 1.35) * t.z * uFlow;
+        vec2 radial = delta/max(dist,1.0);
+        vec2 tangent = vec2(-radial.y,radial.x);
+        float core = exp(-dot(delta,delta)/max(1.0,uBrushRadius*uBrushRadius*1.7));
+        float wavefront = t.w * 138.0;
+        float band = exp(-pow((dist-wavefront)/max(17.0,uBrushRadius*.36),2.0));
+        float ring = sin((dist-wavefront)*.125) * band;
+        displacement += uDirections[i]*1.85*core*decay;
+        displacement += radial*ring*27.0*decay;
+        displacement += tangent*sin(dist*.072-t.w*17.0)*core*8.0*decay;
+      }
+      if (length(displacement)>54.0) displacement = normalize(displacement)*54.0;
+      vec2 displacedUV = clamp(vUv - displacement/uSize, vec2(0.0), vec2(1.0));
+      float opacity = texture2D(uTexture, displacedUV).a;
+      if (uRight > .5) {
+        float local = (displacedUV.x-uSplit.x)/max(.001,uSplit.y-uSplit.x);
+        float grain = hash21(floor(displacedUV*uSize*.35));
+        float edge = -.16+uDissolve*1.33;
+        float erosion = 1.0-smoothstep(edge-.035, edge+.045, local+(grain-.5)*.155);
+        opacity *= 1.0-.90*erosion;
+      }
+      if (opacity < .003) discard;
+      float toneMix = clamp((displacedUV.x-uTextSpan.x)/max(0.001,uTextSpan.y-uTextSpan.x),0.0,1.0);
+      gl_FragColor = vec4(mix(uInkStart,uInkEnd,toneMix),opacity);
+      #include <colorspace_fragment>
+    }
+  `;
+  const pointVertex = `
+    precision highp float;
+    attribute vec3 aSeed;
+    attribute float aLocal;
+    attribute float aTone;
+    uniform float uTime;
+    uniform float uDissolve;
+    uniform float uFlow;
+    uniform float uPixelRatio;
+    uniform float uBrushRadius;
+    uniform vec4 uTrails[${MAX_TRAILS}];
+    uniform vec2 uDirections[${MAX_TRAILS}];
+    varying float vOpacity;
+    varying float vTone;
+    void main() {
+      vTone = aTone;
+      vec2 xy = position.xy;
+      float age = uDissolve-(.16+aLocal)/1.33;
+      float progress = clamp(age/.48,0.0,1.0);
+      vOpacity = age > 0.0 ? max(.10,.85-.75*smoothstep(0.0,1.0,progress)) : 0.0;
+      float travel = min(190.0,uBrushRadius*1.65);
+      xy += progress * vec2(-travel*(.3+aSeed.x*.7),travel*(.5+aSeed.y));
+      xy += progress * vec2(sin(uTime*1.1+aSeed.y*15.0)*22.0,cos(uTime*.85+aSeed.x*13.0)*14.0);
+      for (int i=0; i<${MAX_TRAILS}; i++) {
+        vec4 t = uTrails[i];
+        vec2 delta = xy-t.xy;
+        float dist = length(delta);
+        float decay = exp(-t.w*1.35)*t.z*uFlow;
+        vec2 radial = delta/max(dist,1.0);
+        float core = exp(-dot(delta,delta)/max(1.0,uBrushRadius*uBrushRadius*1.7));
+        float front = t.w*138.0;
+        float band = exp(-pow((dist-front)/max(17.0,uBrushRadius*.36),2.0));
+        float ring = sin((dist-front)*.125)*band;
+        xy += uDirections[i]*1.4*core*decay + radial*ring*20.0*decay;
+      }
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(xy,.6,1.0);
+      gl_PointSize = uPixelRatio*(1.2+aSeed.z*1.8);
+    }
+  `;
+  const pointFragment = `
+    precision highp float;
+    uniform vec3 uInkStart;
+    uniform vec3 uInkEnd;
+    varying float vOpacity;
+    varying float vTone;
+    void main() {
+      if (vOpacity < .01) discard;
+      float edge = max(abs(gl_PointCoord.x-.5),abs(gl_PointCoord.y-.5));
+      float a = 1.0-smoothstep(.35,.5,edge);
+      gl_FragColor = vec4(mix(uInkStart,uInkEnd,clamp(vTone,0.0,1.0)),a*vOpacity);
+      #include <colorspace_fragment>
+    }
+  `;
+
+  const characterSettings = [
+    {ch:'F', weight:900, width:1.00, height:1.02, offset:0},
+    {ch:'R', weight:900, width:.89, height:1.15, offset:-.035},
+    {ch:'A', weight:900, width:1.07, height:.91, offset:.025},
+    {ch:'G', weight:600, width:.92, height:1.16, offset:-.020},
+    {ch:'M', weight:600, width:1.13, height:.98, offset:0},
+    {ch:'E', weight:600, width:.88, height:1.10, offset:-.012},
+    {ch:'N', weight:300, width:.92, height:.93, offset:.035},
+    {ch:'T', weight:300, width:.79, height:1.19, offset:-.025},
+    {ch:'E', weight:100, width:1.01, height:.95, offset:.020},
+    {ch:'D', weight:100, width:.89, height:1.12, offset:-.012}
+  ];
+
+  let glyphMeshes = [];
+  let pointMesh = null;
+  let viewportW = 0, viewportH = 0;
+  let resizeQueue = 0;
+  let lastFrame = 0;
+  let animationStart = null;
+  const pointerStates = new Map();
+  const FRAGMENT = 'FRAGMENTED';
+
+  function disposeType() {
+    for (const mesh of glyphMeshes) {
+      scene.remove(mesh);
+      mesh.geometry.dispose();
+      mesh.material.uniforms.uTexture.value.dispose();
+      mesh.material.dispose();
+    }
+    glyphMeshes = [];
+    if (pointMesh) {
+      scene.remove(pointMesh);
+      pointMesh.geometry.dispose();
+      pointMesh.material.dispose();
+      pointMesh = null;
+    }
+  }
+
+  function makeType() {
+    disposeType();
+    const variation = 0.82;
+    const widthLimit = viewportW*(viewportW < 520 ? .91 : .86);
+    const measurement = document.createElement('canvas').getContext('2d');
+    const totalAt = fontSize => characterSettings.reduce((sum,p) => {
+      measurement.font = `${p.weight} ${fontSize}px "aileron", "Helvetica Neue", Arial, sans-serif`;
+      const sx = 1+(p.width-1)*variation;
+      return sum + measurement.measureText(p.ch).width*sx + fontSize*.005;
+    },0);
+    let fontSize = Math.min(172, viewportH*.27, viewportW*.16);
+    while(totalAt(fontSize)>widthLimit && fontSize>14) fontSize*=.96;
+    fontSize = Math.max(16,fontSize);
+    const totalWidth = totalAt(fontSize);
+    const padX = Math.ceil(Math.max(23,fontSize*.25));
+    const padY = Math.ceil(Math.max(36,fontSize*.5));
+    const textW = Math.ceil(totalWidth+padX*2);
+    const textH = Math.ceil(fontSize*1.65+padY*2);
+    const pixelRatio = Math.min(window.devicePixelRatio||1,2);
+    const layers = [document.createElement('canvas'),document.createElement('canvas')];
+    const contexts = layers.map(c => {
+      c.width = Math.ceil(textW*pixelRatio);
+      c.height = Math.ceil(textH*pixelRatio);
+      const ctx = c.getContext('2d',{willReadFrequently:true});
+      ctx.scale(pixelRatio,pixelRatio);
+      ctx.fillStyle = '#ffffff';
+      ctx.textBaseline = 'alphabetic';
+      ctx.textAlign = 'left';
+      return ctx;
+    });
+    let x = padX;
+    let rightStart=0;
+    const baseLine = textH*.5 + fontSize*.34;
+    characterSettings.forEach((p,i) => {
+      const ctx = contexts[i<6 ? 0 : 1];
+      const sx = 1+(p.width-1)*variation;
+      const sy = 1+(p.height-1)*variation;
+      ctx.font = `${p.weight} ${fontSize}px "aileron", "Helvetica Neue", Arial, sans-serif`;
+      const glyphW = ctx.measureText(p.ch).width*sx;
+      if(i===6)rightStart=x;
+      ctx.save();
+      ctx.translate(x,baseLine+(p.offset*fontSize*variation));
+      ctx.scale(sx,sy);
+      ctx.fillText(p.ch,0,0);
+      ctx.restore();
+      x += glyphW+fontSize*.005;
+    });
+    const rightEnd = x;
+    const split = new THREE.Vector2(rightStart/textW,rightEnd/textW);
+    const size = new THREE.Vector2(textW,textH);
+
+    layers.forEach((layer,index) => {
+      const texture = new THREE.CanvasTexture(layer);
+      texture.colorSpace = THREE.SRGBColorSpace;
+      texture.minFilter = THREE.LinearFilter;
+      texture.magFilter = THREE.LinearFilter;
+      const uniforms = {
+        ...shared,
+        uTexture: {value:texture},
+        uSize:{value:size},
+        uSplit:{value:split},
+        uTextSpan:{value:new THREE.Vector2(padX/textW,rightEnd/textW)},
+        uRight:{value:index===1?1:0}
+      };
+      const material = new THREE.ShaderMaterial({
+        uniforms, vertexShader:glyphVertex, fragmentShader:glyphFragment,
+        transparent:true, depthWrite:false, depthTest:false,
+        side:THREE.DoubleSide
+      });
+      const mesh = new THREE.Mesh(new THREE.PlaneGeometry(textW,textH),material);
+      mesh.position.z=0;
+      mesh.renderOrder=1;
+      scene.add(mesh); glyphMeshes.push(mesh);
+    });
+
+    // Sample actual glyph raster pixels to build the disintegration particles.
+    const rightContext = contexts[1];
+    const pixels = rightContext.getImageData(0,0,layers[1].width,layers[1].height);
+    const step = viewportW<580 ? 2.3 : 2.7;
+    const positions=[], seeds=[], locals=[], tones=[];
+    const imageW = layers[1].width;
+    for(let py=Math.floor(padY*.3); py<textH-padY*.25; py+=step) {
+      for(let px=rightStart; px<rightEnd; px+=step) {
+        const rx=Math.min(imageW-1,Math.floor(px*pixelRatio));
+        const ry=Math.min(layers[1].height-1,Math.floor(py*pixelRatio));
+        const a=pixels.data[(ry*imageW+rx)*4+3];
+        if(a<105 || Math.random()>.91) continue;
+        positions.push(px-textW*.5, textH*.5-py,0);
+        seeds.push(Math.random(),Math.random(),Math.random());
+        locals.push((px-rightStart)/Math.max(1,rightEnd-rightStart));
+        tones.push((px-padX)/Math.max(1,totalWidth));
+      }
+    }
+    const particleGeometry = new THREE.BufferGeometry();
+    particleGeometry.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));
+    particleGeometry.setAttribute('aSeed',new THREE.Float32BufferAttribute(seeds,3));
+    particleGeometry.setAttribute('aLocal',new THREE.Float32BufferAttribute(locals,1));
+    particleGeometry.setAttribute('aTone',new THREE.Float32BufferAttribute(tones,1));
+    const particleMaterial = new THREE.ShaderMaterial({
+      uniforms:{...shared, uPixelRatio:{value:Math.min(window.devicePixelRatio||1,2)}},
+      vertexShader:pointVertex, fragmentShader:pointFragment,
+      transparent:true, blending:THREE.NormalBlending,
+      depthWrite:false, depthTest:false
+    });
+    pointMesh = new THREE.Points(particleGeometry,particleMaterial);
+    pointMesh.renderOrder = 2;
+    scene.add(pointMesh);
+  }
+
+  function sizeScene() {
+    viewportW = window.innerWidth;
+    viewportH = window.innerHeight;
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+    renderer.setSize(viewportW,viewportH,false);
+    camera.left=-viewportW/2; camera.right=viewportW/2;
+    camera.top=viewportH/2; camera.bottom=-viewportH/2;
+    camera.updateProjectionMatrix();
+    shared.uBrushRadius.value = Math.max(76,Math.min(142,viewportW*.15));
+    makeType();
+  }
+  sizeScene();
+  document.body.classList.add('is-ready');
+  window.addEventListener('resize', () => {
+    cancelAnimationFrame(resizeQueue);
+    resizeQueue=requestAnimationFrame(sizeScene);
+  });
+  document.fonts.ready.then(() => {
+    // Re-rasterize if the Adobe font arrives after the first render.
+    if(document.body.classList.contains('is-ready')) makeType();
+  });
+
+  function pointerXY(e) { return {x:e.clientX-viewportW*.5,y:viewportH*.5-e.clientY}; }
+  stage.addEventListener('pointerdown',e => {
+    const xy=pointerXY(e);
+    pointerStates.set(e.pointerId,{...xy,last:performance.now()});
+    try {stage.setPointerCapture(e.pointerId);}catch(_){}
+    injectTrail(xy,new THREE.Vector2(0,0),1.45);
+  });
+  function injectTrail(xy,delta,strength=1) {
+    trails.unshift({x:xy.x,y:xy.y,dx:delta.x,dy:delta.y,strength,born:performance.now()/1000});
+    if(trails.length>MAX_TRAILS)trails.length=MAX_TRAILS;
+  }
+  stage.addEventListener('pointermove',e => {
+    if(reducedMotion.matches)return;
+    if(e.pointerType==='touch' && !pointerStates.has(e.pointerId))return;
+    const xy=pointerXY(e);
+    const prior=pointerStates.get(e.pointerId);
+    let delta=new THREE.Vector2(0,0);
+    if(prior) {
+      delta.set(xy.x-prior.x,xy.y-prior.y);
+    } else {
+      // Mouse hover also creates a gentle wake without requiring a button press.
+      const old=stage._lastHover;
+      if(old) delta.set(xy.x-old.x,xy.y-old.y);
+    }
+    const maxSpeed=40;
+    if(delta.length()>maxSpeed)delta.setLength(maxSpeed);
+    if(delta.length()>0.45) injectTrail(xy,delta,(e.buttons || e.pointerType==='touch') ? 1.33 : 1.02);
+    pointerStates.set(e.pointerId,{...xy,last:performance.now()});
+    stage._lastHover=xy;
+  },{passive:true});
+  const endPointer=e=>{pointerStates.delete(e.pointerId);};
+  stage.addEventListener('pointerup',endPointer);
+  stage.addEventListener('pointercancel',endPointer);
+  stage.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse')stage._lastHover=null;});
+
+  function applyTrails(now) {
+    for(let i=0;i<MAX_TRAILS;i++) {
+      const tr=trails[i];
+      if(tr) {
+        const age=Math.max(0,now-tr.born);
+        trailLocations[i].set(tr.x,tr.y,tr.strength,age);
+        trailDirections[i].set(tr.dx,tr.dy);
+      } else {
+        trailLocations[i].set(0,0,0,25);
+        trailDirections[i].set(0,0);
+      }
+    }
+    while(trails.length && now-trails[trails.length-1].born>2.6)trails.pop();
+  }
+
+  function getDissolve(t) {
+    const cycle=((t-animationStart)%9.8+9.8)%9.8;
+    const smoother=x=>{const p=Math.max(0,Math.min(1,x));return p*p*(3-2*p);};
+    if(cycle<1.4)return 0;
+    if(cycle<4.6)return smoother((cycle-1.4)/3.2);
+    if(cycle<5.65)return 1;
+    if(cycle<8.25)return 1-smoother((cycle-5.65)/2.60);
+    return 0;
+  }
+
+  let gpuFailed=false;
+  function loop(timestamp) {
+    if(gpuFailed)return;
+    requestAnimationFrame(loop);
+    const now=timestamp*.001;
+    if (animationStart === null) animationStart = now;
+    lastFrame = now;
+    const motionAllowed=!reducedMotion.matches;
+    shared.uTime.value=motionAllowed ? now : 0;
+    // Keep the requested automatic cycle; reduced motion suppresses fluid wakes.
+    shared.uDissolve.value=getDissolve(now);
+    applyTrails(now);
+    try {
+      renderer.render(scene,camera);
+      // Once the Three.js version has actually drawn, release the Canvas fallback.
+      if (window.__fragmentedFallback) window.__fragmentedFallback.stop();
+    } catch (error) {
+      console.error('Three.js render failed, keeping animated Canvas fallback.',error);
+      gpuFailed=true;
+      canvas.hidden=true;
+      if (window.__fragmentedFallback) window.__fragmentedFallback.resume();
+      return;
+    }
+  }
+  // Start intact, dissolve the final four letters, then restore and loop.
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
