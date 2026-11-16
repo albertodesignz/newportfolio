@@ -72,7 +72,7 @@
        shared and cropped by SVG viewBox, preserving the original image pixels. */
     .filmstrip-window {
       position: fixed; z-index: 2; left: 50%;
-      bottom: calc(50% + clamp(65px, 9vw, 140px));
+      bottom: calc(50% + clamp(40px, 7vw, 104px));
       transform: translateX(-50%); width: min(92vw, 1400px);
       overflow-x: auto; overscroll-behavior-x: contain;
       scrollbar-width: none; touch-action: pan-x;
@@ -80,26 +80,18 @@
     .filmstrip-window::-webkit-scrollbar { display: none; }
     .filmstrip-window:focus-visible { outline: 1px solid var(--ink); outline-offset: 5px; }
     .filmstrip {
-      --rail: clamp(14px, 1.6vw, 24px);
       position: relative; display: grid; grid-template-columns: repeat(10, minmax(0, 1fr));
       gap: clamp(3px, .65vw, 10px); margin: 0; list-style: none;
-      padding: var(--rail) 7px; background: #0b0c09;
+      padding: 0; background: transparent;
     }
-    .filmstrip::before, .filmstrip::after {
-      content: ''; position: absolute; left: 0; right: 0; height: var(--rail);
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='24' viewBox='0 0 44 24'%3E%3Crect x='16' y='6' width='12' height='12' rx='2' fill='%23f7f7f4'/%3E%3C/svg%3E");
-      background-size: auto 100%; pointer-events: none;
-    }
-    .filmstrip::before { top: 0; }
-    .filmstrip::after { bottom: 0; }
-    .film-frame { min-width: 0; margin: 0; overflow: hidden; }
+    .film-frame { min-width: 0; margin: 0; overflow: hidden; opacity: .60; }
     .film-frame svg { display: block; width: 100%; aspect-ratio: 260 / 280; }
     @media (max-width: 690px) {
-      .filmstrip { width: 980px; gap: 7px; --rail: 18px; }
-      .filmstrip-window { bottom: calc(50% + 70px); }
+      .filmstrip { width: 980px; gap: 7px; }
+      .filmstrip-window { bottom: calc(50% + 42px); }
     }
     @media (max-height: 500px) and (min-width: 691px) {
-      .filmstrip-window { width: min(72vw, 1000px); bottom: calc(50% + 50px); }
+      .filmstrip-window { width: min(72vw, 1000px); bottom: calc(50% + 44px); }
     }
     .header {
       position: fixed; z-index: 4; top: 28px; right: 32px;
@@ -133,7 +125,7 @@
     <canvas id="backup" aria-hidden="true"></canvas>
     <div class="fallback" aria-hidden="true"><span>F</span><span>R</span><span>A</span><span>G</span><span>M</span><span>E</span><span>N</span><span>T</span><span>E</span><span>D</span></div>
   </main>
-  <section class="filmstrip-window" tabindex="0" aria-label="Portrait filmstrip, from sharp to blurred. Scroll horizontally on small screens.">
+  <section class="filmstrip-window" tabindex="0" aria-label="Portrait sequence, from sharp to blurred. Scroll horizontally on small screens.">
     <ol class="filmstrip" id="portrait-frames" aria-label="Ten portrait frames"></ol>
   </section>
   <header class="header">
