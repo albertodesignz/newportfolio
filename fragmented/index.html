@@ -68,31 +68,7 @@
     .fallback span:nth-child(9) { transform: scale(.96, .93); }
     .fallback span:nth-child(10) { transform: scale(.89, 1.12); }
     body.is-ready .fallback { opacity: 0; }
-    /* Each portrait is an independently addressable frame; the source photo is
-       shared and cropped by SVG viewBox, preserving the original image pixels. */
-    .filmstrip-window {
-      position: fixed; z-index: 2; left: 50%;
-      bottom: calc(50% + clamp(40px, 7vw, 104px));
-      transform: translateX(-50%); width: min(92vw, 1400px);
-      overflow-x: auto; overscroll-behavior-x: contain;
-      scrollbar-width: none; touch-action: pan-x;
-    }
-    .filmstrip-window::-webkit-scrollbar { display: none; }
-    .filmstrip-window:focus-visible { outline: 1px solid var(--ink); outline-offset: 5px; }
-    .filmstrip {
-      position: relative; display: grid; grid-template-columns: repeat(10, minmax(0, 1fr));
-      gap: clamp(3px, .65vw, 10px); margin: 0; list-style: none;
-      padding: 0; background: transparent;
-    }
-    .film-frame { min-width: 0; margin: 0; overflow: hidden; opacity: .60; }
-    .film-frame svg { display: block; width: 100%; aspect-ratio: 260 / 280; }
-    @media (max-width: 690px) {
-      .filmstrip { width: 980px; gap: 7px; }
-      .filmstrip-window { bottom: calc(50% + 42px); }
-    }
-    @media (max-height: 500px) and (min-width: 691px) {
-      .filmstrip-window { width: min(72vw, 1000px); bottom: calc(50% + 44px); }
-    }
+    #stage:focus-visible { outline: 1px solid var(--ink); outline-offset: -8px; }
     .header {
       position: fixed; z-index: 4; top: 28px; right: 32px;
       display: flex; justify-content: flex-end;
@@ -125,9 +101,7 @@
     <canvas id="backup" aria-hidden="true"></canvas>
     <div class="fallback" aria-hidden="true"><span>F</span><span>R</span><span>A</span><span>G</span><span>M</span><span>E</span><span>N</span><span>T</span><span>E</span><span>D</span></div>
   </main>
-  <section class="filmstrip-window" tabindex="0" aria-label="Portrait sequence, from sharp to blurred. Scroll horizontally on small screens.">
-    <ol class="filmstrip" id="portrait-frames" aria-label="Ten portrait frames"></ol>
-  </section>
+  <canvas id="portrait" role="img" aria-label="Portrait 1 of 10, sharp" style="position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:2"></canvas>
   <header class="header">
     <button id="theme-toggle" type="button" aria-label="Switch to dark mode" title="Toggle light and dark mode">
       <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.4 14.2A8.6 8.6 0 0 1 9.8 3.6a8.7 8.7 0 1 0 10.6 10.6Z"/></svg>
@@ -145,26 +119,78 @@
     [11,450,258,282], [302,452,257,281], [595,454,258,280],
     [888,455,258,282], [1183,457,259,281]
   ];
-  const ns = 'http://www.w3.org/2000/svg';
   const base = location.protocol === 'file:' ? location.href : location.origin + '/fragmented/';
-  const source = new URL('assets/portrait-contact-sheet.png', base).href;
-  const strip = document.getElementById('portrait-frames');
-  frames.forEach(([x,y,w,h],i) => {
-    const frame = document.createElement('li');
-    frame.className = 'film-frame';
-    frame.id = `portrait-frame-${i+1}`;
-    frame.dataset.frame = String(i+1);
-    const svg = document.createElementNS(ns, 'svg');
-    svg.setAttribute('viewBox', `${x} ${y} ${w} ${h}`);
-    svg.setAttribute('preserveAspectRatio', 'xMidYMid slice');
-    svg.setAttribute('role', 'img');
-    svg.setAttribute('aria-label', `Portrait frame ${i+1} of 10${i<4?', sharp':i<7?', softened':', heavily blurred'}`);
-    const image = document.createElementNS(ns, 'image');
-    image.setAttribute('href', source);
-    image.setAttribute('width', '1456');
-    image.setAttribute('height', '816');
-    svg.append(image); frame.append(svg); strip.append(frame);
+  const source = new Image();
+  source.src = new URL('assets/portrait-contact-sheet.png', base).href;
+  const canvas = document.getElementById('portrait');
+  const ctx = canvas.getContext('2d');
+  const stage = document.getElementById('stage');
+  stage.tabIndex = 0;
+  stage.setAttribute('aria-label', 'Glide across FRAGMENTED to change the portrait from sharp to blurred. The final portrait disintegrates. Use left and right arrow keys as an alternative.');
+  let selected=0, previous=0, changed=0, entered=0, spread=0, last=0;
+  let vw=0,vh=0,dpr=1;
+  const clamp=v=>Math.max(0,Math.min(1,v));
+  const smooth=v=>{v=clamp(v);return v*v*(3-2*v);};
+  const rand=(x,y)=>{const n=Math.sin(x*127.1+y*311.7)*43758.5453;return n-Math.floor(n);};
+  function select(index){
+    if(index===selected)return;
+    previous=selected;selected=index;changed=performance.now();entered=changed;
+    canvas.dataset.frame=String(index+1);
+    canvas.setAttribute('aria-label',`Portrait ${index+1} of 10${index===9?', disintegrating':index<4?', sharp':', blurred'}`);
+  }
+  canvas.dataset.frame='1';
+  function pointer(e){
+    const bounds=window.__fragmentedLetterBounds;
+    if(!bounds || e.clientY<bounds.top-22 || e.clientY>bounds.bottom+22)return;
+    const i=bounds.letters.findIndex(b=>e.clientX>=b.left&&e.clientX<b.right);
+    if(i>=0)select(i);
+  }
+  stage.addEventListener('pointermove',pointer,{passive:true});
+  stage.addEventListener('pointerdown',pointer,{passive:true});
+  stage.addEventListener('keydown',e=>{
+    if(e.key!=='ArrowLeft'&&e.key!=='ArrowRight')return;
+    e.preventDefault();select(Math.max(0,Math.min(9,selected+(e.key==='ArrowRight'?1:-1))));
   });
+  function draw(now){
+    requestAnimationFrame(draw);
+    if(!source.complete||!source.naturalWidth)return;
+    if(vw!==innerWidth||vh!==innerHeight||dpr!==Math.min(devicePixelRatio||1,2)){
+      vw=innerWidth;vh=innerHeight;dpr=Math.min(devicePixelRatio||1,2);
+      canvas.width=Math.round(vw*dpr);canvas.height=Math.round(vh*dpr);
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+    }
+    const dt=Math.min(.05,(now-last)/1000||.016);last=now;
+    const target=selected===9?smooth((now-entered-350)/2100):0;
+    spread+=(target-spread)*(1-Math.exp(-dt*9));
+    const bounds=window.__fragmentedLetterBounds;
+    const size=Math.min(220,vw*.38,vh*.27);
+    const h=size*280/260,x=(vw-size)/2,y=(bounds?bounds.top:vh*.4)-18-h;
+    const mix=smooth((now-changed)/140);
+    ctx.clearRect(0,0,vw,vh);
+    function portrait(index,opacity){
+      const [sx,sy,sw,sh]=frames[index];
+      ctx.globalAlpha=opacity;ctx.drawImage(source,sx,sy,sw,sh,x,y,size,h);
+    }
+    if(mix<1)portrait(previous,.60*(1-mix));
+    portrait(selected,(selected===9?.60-.50*spread:.60)*mix);
+    if(selected===9&&spread>.002){
+      const [sx,sy,sw,sh]=frames[9];
+      const step=5;
+      for(let py=0;py<h;py+=step)for(let px=0;px<size;px+=step){
+        const seed=rand(px,py),seed2=rand(py+9,px+3);
+        const local=smooth((spread-seed*.28)/.72);
+        if(local===0)continue;
+        const travel=local*Math.min(115,vw*.23);
+        const dx=-travel*(.25+seed)+Math.sin(now*.001+seed*30)*local*12;
+        const dy=-travel*(.25+seed2)+Math.cos(now*.0008+seed2*20)*local*10;
+        ctx.globalAlpha=Math.max(.10,.55-.45*local)*mix;
+        const tw=Math.min(step,size-px),th=Math.min(step,h-py);
+        ctx.drawImage(source,sx+px/size*sw,sy+py/h*sh,tw/size*sw,th/h*sh,x+px+dx,y+py+dy,tw,th);
+      }
+    }
+    ctx.globalAlpha=1;canvas.dataset.disintegration=spread.toFixed(2);
+  }
+  requestAnimationFrame(draw);
 })();
 </script>
 <script>
@@ -220,9 +246,11 @@
     oc.fillStyle='#ffffff';oc.textAlign='left';oc.textBaseline='alphabetic';
     const baseline=boxH*.5+fontSize*.33;
     let x=pad;
+    const letterBounds=[];
     settings.forEach((p,i)=>{
       oc.font=`${p[0]} ${fontSize}px aileron, Arial, sans-serif`;
       const w=oc.measureText(chars[i]).width*p[1];
+      letterBounds.push({left:x,right:x+w+fontSize*.005});
       if(i===6)split=x;
       oc.save();oc.translate(x,baseline+p[3]*fontSize);oc.scale(p[1],p[2]);
       oc.fillText(chars[i],0,0);oc.restore();x+=w+fontSize*.005;
@@ -230,6 +258,7 @@
     end=x;
     spriteX=(width-boxW)*.5;
     spriteY=(height-boxH)*.5;
+    if(!document.body.classList.contains('is-ready'))window.__fragmentedLetterBounds={letters:letterBounds.map(b=>({left:b.left+spriteX,right:b.right+spriteX})),top:height*.5-fontSize*.53,bottom:height*.5+fontSize*.42};
     const pixels=oc.getImageData(0,0,boxW,boxH).data;
     const size=fontSize<38?4:fontSize<72?6:8;
     tiles=[];points=[];
@@ -634,6 +663,7 @@
       return ctx;
     });
     let x = padX;
+    const letterBounds=[];
     let rightStart=0;
     const baseLine = textH*.5 + fontSize*.34;
     characterSettings.forEach((p,i) => {
@@ -642,6 +672,7 @@
       const sy = 1+(p.height-1)*variation;
       ctx.font = `${p.weight} ${fontSize}px "aileron", "Helvetica Neue", Arial, sans-serif`;
       const glyphW = ctx.measureText(p.ch).width*sx;
+      letterBounds.push({left:viewportW*.5-textW*.5+x,right:viewportW*.5-textW*.5+x+glyphW+fontSize*.005});
       if(i===6)rightStart=x;
       ctx.save();
       ctx.translate(x,baseLine+(p.offset*fontSize*variation));
@@ -651,6 +682,7 @@
       x += glyphW+fontSize*.005;
     });
     const rightEnd = x;
+    window.__fragmentedLetterBounds={letters:letterBounds,top:viewportH*.5-fontSize*.53,bottom:viewportH*.5+fontSize*.42};
     const split = new THREE.Vector2(rightStart/textW,rightEnd/textW);
     const size = new THREE.Vector2(textW,textH);
 
