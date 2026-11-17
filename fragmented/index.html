@@ -58,15 +58,15 @@
     .fallback span:nth-child(n+4):nth-child(-n+6) { font-weight: 600; }
     .fallback span:nth-child(7), .fallback span:nth-child(8) { font-weight: 300; }
     .fallback span:nth-child(n+9) { font-weight: 100; }
-    .fallback span:nth-child(2) { transform: scale(.92, 1.1); }
-    .fallback span:nth-child(3) { transform: scale(1.06, .89); }
-    .fallback span:nth-child(4) { transform: scale(.88, 1.12); }
-    .fallback span:nth-child(5) { transform: scale(1.09, .94); }
-    .fallback span:nth-child(6) { transform: scale(.94, 1.08); }
-    .fallback span:nth-child(7) { transform: scale(.90, .96); }
-    .fallback span:nth-child(8) { transform: scale(.83, 1.16); }
-    .fallback span:nth-child(9) { transform: scale(.96, .93); }
-    .fallback span:nth-child(10) { transform: scale(.89, 1.12); }
+    .fallback span:nth-child(2) { transform: scaleX(.92); }
+    .fallback span:nth-child(3) { transform: scaleX(1.06); }
+    .fallback span:nth-child(4) { transform: scaleX(.88); }
+    .fallback span:nth-child(5) { transform: scaleX(1.09); }
+    .fallback span:nth-child(6) { transform: scaleX(.94); }
+    .fallback span:nth-child(7) { transform: scaleX(.90); }
+    .fallback span:nth-child(8) { transform: scaleX(.83); }
+    .fallback span:nth-child(9) { transform: scaleX(.96); }
+    .fallback span:nth-child(10) { transform: scaleX(.89); }
     body.is-ready .fallback { opacity: 0; }
     #stage:focus-visible { outline: 1px solid var(--ink); outline-offset: -8px; }
     .header {
@@ -96,7 +96,7 @@
   </style>
 </head>
 <body>
-  <main id="stage" aria-label="FRAGMENTED typography. The final four letters dissolve into particles and return. Moving a mouse or finger creates fluid ripples across the word.">
+  <main id="stage" aria-label="FRAGMENTED typography. Glide across the letters to disintegrate the word and change the portrait. Glide back to reassemble.">
     <canvas id="art" aria-hidden="true"></canvas>
     <canvas id="backup" aria-hidden="true"></canvas>
     <div class="fallback" aria-hidden="true"><span>F</span><span>R</span><span>A</span><span>G</span><span>M</span><span>E</span><span>N</span><span>T</span><span>E</span><span>D</span></div>
@@ -127,14 +127,32 @@
   const stage = document.getElementById('stage');
   stage.tabIndex = 0;
   stage.setAttribute('aria-label', 'Glide across FRAGMENTED to change the portrait from sharp to blurred. The final portrait disintegrates. Use left and right arrow keys as an alternative.');
-  let selected=0, previous=0, changed=0, entered=0, spread=0, last=0;
+  let selected=0, previous=0, changed=0, spread=0, last=0;
+  let glideTarget=0, glide=0;
+  window.__fragmentedGlide=0;
+  let portraits=null;
+  function preparePortraits(){
+    portraits=frames.map(([sx,sy,sw,sh])=>{
+      const c=document.createElement('canvas');c.width=260;c.height=280;
+      const g=c.getContext('2d');g.drawImage(source,sx,sy,sw,sh,0,0,260,280);
+      g.globalCompositeOperation='destination-in';
+      for(const [x0,y0,x1,y1] of [[0,0,260,0],[0,0,0,280]]){
+        const mask=g.createLinearGradient(x0,y0,x1,y1);
+        mask.addColorStop(0,'transparent');mask.addColorStop(.10,'black');
+        mask.addColorStop(.90,'black');mask.addColorStop(1,'transparent');
+        g.fillStyle=mask;g.fillRect(0,0,260,280);
+      }
+      return c;
+    });
+  }
   let vw=0,vh=0,dpr=1;
   const clamp=v=>Math.max(0,Math.min(1,v));
   const smooth=v=>{v=clamp(v);return v*v*(3-2*v);};
   const rand=(x,y)=>{const n=Math.sin(x*127.1+y*311.7)*43758.5453;return n-Math.floor(n);};
-  function select(index){
+  function select(index,position=index/9){
+    glideTarget=clamp(position);
     if(index===selected)return;
-    previous=selected;selected=index;changed=performance.now();entered=changed;
+    previous=selected;selected=index;changed=performance.now();
     canvas.dataset.frame=String(index+1);
     canvas.setAttribute('aria-label',`Portrait ${index+1} of 10${index===9?', disintegrating':index<4?', sharp':', blurred'}`);
   }
@@ -143,7 +161,9 @@
     const bounds=window.__fragmentedLetterBounds;
     if(!bounds || e.clientY<bounds.top-22 || e.clientY>bounds.bottom+22)return;
     const i=bounds.letters.findIndex(b=>e.clientX>=b.left&&e.clientX<b.right);
-    if(i>=0)select(i);
+    const first=bounds.letters[0],end=bounds.letters[9];
+    const start=(first.left+first.right)/2,finish=(end.left+end.right)/2;
+    if(i>=0)select(i,(e.clientX-start)/(finish-start));
   }
   stage.addEventListener('pointermove',pointer,{passive:true});
   stage.addEventListener('pointerdown',pointer,{passive:true});
@@ -153,28 +173,29 @@
   });
   function draw(now){
     requestAnimationFrame(draw);
+    const dt=Math.min(.05,(now-last)/1000||.016);last=now;
+    glide+=(glideTarget-glide)*(1-Math.exp(-dt*14));
+    window.__fragmentedGlide=glide;
+    spread=smooth((glide-.82)/.18);
     if(!source.complete||!source.naturalWidth)return;
+    if(!portraits)preparePortraits();
     if(vw!==innerWidth||vh!==innerHeight||dpr!==Math.min(devicePixelRatio||1,2)){
       vw=innerWidth;vh=innerHeight;dpr=Math.min(devicePixelRatio||1,2);
       canvas.width=Math.round(vw*dpr);canvas.height=Math.round(vh*dpr);
       ctx.setTransform(dpr,0,0,dpr,0,0);
     }
-    const dt=Math.min(.05,(now-last)/1000||.016);last=now;
-    const target=selected===9?smooth((now-entered-350)/2100):0;
-    spread+=(target-spread)*(1-Math.exp(-dt*9));
     const bounds=window.__fragmentedLetterBounds;
     const size=Math.min(220,vw*.38,vh*.27);
     const h=size*280/260,x=(vw-size)/2,y=(bounds?bounds.top:vh*.4)-18-h;
     const mix=smooth((now-changed)/140);
     ctx.clearRect(0,0,vw,vh);
     function portrait(index,opacity){
-      const [sx,sy,sw,sh]=frames[index];
-      ctx.globalAlpha=opacity;ctx.drawImage(source,sx,sy,sw,sh,x,y,size,h);
+      ctx.globalAlpha=opacity;ctx.drawImage(portraits[index],x,y,size,h);
     }
     if(mix<1)portrait(previous,.60*(1-mix));
     portrait(selected,(selected===9?.60-.50*spread:.60)*mix);
     if(selected===9&&spread>.002){
-      const [sx,sy,sw,sh]=frames[9];
+      const sx=0,sy=0,sw=260,sh=280;
       const step=5;
       for(let py=0;py<h;py+=step)for(let px=0;px<size;px+=step){
         const seed=rand(px,py),seed2=rand(py+9,px+3);
@@ -185,7 +206,7 @@
         const dy=-travel*(.25+seed2)+Math.cos(now*.0008+seed2*20)*local*10;
         ctx.globalAlpha=Math.max(.10,.55-.45*local)*mix;
         const tw=Math.min(step,size-px),th=Math.min(step,h-py);
-        ctx.drawImage(source,sx+px/size*sw,sy+py/h*sh,tw/size*sw,th/h*sh,x+px+dx,y+py+dy,tw,th);
+        ctx.drawImage(portraits[9],sx+px/size*sw,sy+py/h*sh,tw/size*sw,th/h*sh,x+px+dx,y+py+dy,tw,th);
       }
     }
     ctx.globalAlpha=1;canvas.dataset.disintegration=spread.toFixed(2);
@@ -251,14 +272,16 @@
       oc.font=`${p[0]} ${fontSize}px aileron, Arial, sans-serif`;
       const w=oc.measureText(chars[i]).width*p[1];
       letterBounds.push({left:x,right:x+w+fontSize*.005});
-      if(i===6)split=x;
-      oc.save();oc.translate(x,baseline+p[3]*fontSize);oc.scale(p[1],p[2]);
+      if(i===0)split=x;
+      const metrics=oc.measureText(chars[i]);
+      const sy=fontSize*.72/(metrics.actualBoundingBoxAscent+metrics.actualBoundingBoxDescent);
+      oc.save();oc.translate(x,baseline-metrics.actualBoundingBoxDescent*sy);oc.scale(p[1],sy);
       oc.fillText(chars[i],0,0);oc.restore();x+=w+fontSize*.005;
     });
     end=x;
     spriteX=(width-boxW)*.5;
     spriteY=(height-boxH)*.5;
-    if(!document.body.classList.contains('is-ready'))window.__fragmentedLetterBounds={letters:letterBounds.map(b=>({left:b.left+spriteX,right:b.right+spriteX})),top:height*.5-fontSize*.53,bottom:height*.5+fontSize*.42};
+    if(!document.body.classList.contains('is-ready'))window.__fragmentedLetterBounds={letters:letterBounds.map(b=>({left:b.left+spriteX,right:b.right+spriteX})),top:height*.5-fontSize*.39,bottom:height*.5+fontSize*.34};
     const pixels=oc.getImageData(0,0,boxW,boxH).data;
     const size=fontSize<38?4:fontSize<72?6:8;
     tiles=[];points=[];
@@ -339,7 +362,8 @@
     lastFrame=now;
     const secs=now/1000;
     if(!timeOrigin)timeOrigin=secs;
-    const dissolve=motion(secs-timeOrigin);
+    const dissolve=window.__fragmentedGlide||0;
+    canvas.dataset.dissolve=dissolve.toFixed(3);
     ctx.clearRect(0,0,width,height);
     const style=getComputedStyle(document.documentElement);
     const gradient=ctx.createLinearGradient(spriteX+padLeft,0,spriteX+end,0);
@@ -667,22 +691,23 @@
     let rightStart=0;
     const baseLine = textH*.5 + fontSize*.34;
     characterSettings.forEach((p,i) => {
-      const ctx = contexts[i<6 ? 0 : 1];
+      const ctx = contexts[1];
       const sx = 1+(p.width-1)*variation;
-      const sy = 1+(p.height-1)*variation;
       ctx.font = `${p.weight} ${fontSize}px "aileron", "Helvetica Neue", Arial, sans-serif`;
+      const metrics=ctx.measureText(p.ch);
+      const sy=fontSize*.72/(metrics.actualBoundingBoxAscent+metrics.actualBoundingBoxDescent);
       const glyphW = ctx.measureText(p.ch).width*sx;
       letterBounds.push({left:viewportW*.5-textW*.5+x,right:viewportW*.5-textW*.5+x+glyphW+fontSize*.005});
-      if(i===6)rightStart=x;
+      if(i===0)rightStart=x;
       ctx.save();
-      ctx.translate(x,baseLine+(p.offset*fontSize*variation));
+      ctx.translate(x,baseLine-metrics.actualBoundingBoxDescent*sy);
       ctx.scale(sx,sy);
       ctx.fillText(p.ch,0,0);
       ctx.restore();
       x += glyphW+fontSize*.005;
     });
     const rightEnd = x;
-    window.__fragmentedLetterBounds={letters:letterBounds,top:viewportH*.5-fontSize*.53,bottom:viewportH*.5+fontSize*.42};
+    window.__fragmentedLetterBounds={letters:letterBounds,top:viewportH*.5-fontSize*.38,bottom:viewportH*.5+fontSize*.34};
     const split = new THREE.Vector2(rightStart/textW,rightEnd/textW);
     const size = new THREE.Vector2(textW,textH);
 
@@ -836,7 +861,8 @@
     const motionAllowed=!reducedMotion.matches;
     shared.uTime.value=motionAllowed ? now : 0;
     // Keep the requested automatic cycle; reduced motion suppresses fluid wakes.
-    shared.uDissolve.value=getDissolve(now);
+    shared.uDissolve.value=window.__fragmentedGlide||0;
+    canvas.dataset.dissolve=shared.uDissolve.value.toFixed(3);
     applyTrails(now);
     try {
       renderer.render(scene,camera);
