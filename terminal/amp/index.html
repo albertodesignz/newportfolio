@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent Management Platform</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="app">
+<aside class="sidebar">
+  <a class="brand" href="#workspaces"><span class="brand-symbol" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M3 25 15 4h5L8 25ZM15 25l7-12 7 12h-6l-2-4-2 4Z"/></svg></span><span>Agent Management<span class="brand-sub">Visualization Playground</span></span></a>
+  <label class="workspace-label" for="workspace">Current workspace</label>
+  <select id="workspace" aria-label="Current workspace"></select>
+  <nav id="nav" aria-label="Main navigation"></nav>
+  <div class="sidebar-bottom"><div class="environment-tag"><span class="status-dot"></span> Development environment</div><a class="back-link" href="../index.html#amp">← Back to case study</a><div class="account"><span class="avatar">AV</span><span>Albert Vargas<small>Workspace administrator</small></span></div></div>
+</aside>
+<div class="main-shell"><header class="topbar"><div id="breadcrumb"></div><span class="team-name">LexisNexis Risk Solutions</span></header><main id="main" tabindex="-1"></main><footer class="app-footer"><a href="../index.html#amp">Back to case study</a><span>Changes stay in this browser</span></footer></div>
+</div>
+<div id="toast" role="status" aria-live="polite"></div>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Portfolio — Terminal</title></head><body>
+<div id="term" tabindex="0">
+<style>
+html,body{margin:0;min-height:100%;background:#0b0d0b;color:#d5ded2}
+body{padding:clamp(12px,4vw,48px)}
+#term{max-width:1050px;margin:auto}
+#term :where(div,span,p,pre,label,li,td,th,strong,code,figure,figcaption){color:inherit}
+#term input::placeholder{color:#a6b0a3;opacity:1}
+#term ::selection{background:#b3d8b2;color:#101110}
+#term{scrollbar-color:#667563 #101110}
+#term input{caret-color:#b3d8b2}
+#term .help-list{margin:22px 0;padding:0;list-style:none}
+#term .help-list button{width:100%;display:grid;grid-template-columns:minmax(160px,1fr) 2fr;gap:18px;text-align:left;border:0;border-bottom:1px solid #343834;padding:12px 0}
+#term .help-list code{color:#b3d8b2}
+#term .gallery-image{display:block;max-width:100%;max-height:480px;margin:auto;object-fit:contain}
+#term figure{margin:24px 0}
+#term figcaption{margin-top:12px}
+#term .gallery-controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+#term .empty{border:1px dashed #53634f;padding:32px 24px;margin:24px 0}
+#term .gallery-open{display:block;width:100%;padding:0;border:0}
+#term dialog{background:#101110;color:#e7ede3;border:1px solid #667563;max-width:95vw;max-height:95vh;padding:16px}
+#term dialog::backdrop{background:#000d}
+#term dialog img{max-width:85vw;max-height:75vh;object-fit:contain;display:block;margin:15px auto}
+#term button:disabled{opacity:.6;cursor:default}
+#term .status{color:#d8b885;min-height:1.7em}
+@media(max-width:500px){#term .help-list button{grid-template-columns:1fr;gap:3px}#term .chrome .session{font-size:11px}#term .chrome{height:auto;min-height:38px;flex-wrap:wrap;padding:10px}}
+
+#term{background:#101110;color:#c5c9c2;font:13px/1.7 'SFMono-Regular',Consolas,'Liberation Mono',monospace;min-height:520px;border:1px solid #343834;border-radius:7px;overflow:hidden;outline:none;color-scheme:dark}
+#term *{box-sizing:border-box}
+#term .chrome{height:38px;border-bottom:1px solid #292e29;display:flex;align-items:center;gap:7px;padding:0 17px;color:#a6b0a3;font-size:11px}
+#term .dot{width:8px;height:8px;border-radius:50%;background:#4d514d}
+#term .chrome .session{margin-left:auto;letter-spacing:.06em}
+#term .screen{padding:30px 26px;max-width:850px;margin:auto}
+#term .login{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:445px}
+#term .ascii{font-size:12px;line-height:1.05;letter-spacing:.01em;margin:0 0 28px;color:#d7ded2;white-space:pre}
+#term .dim{color:#a6b0a3}
+#term .green{color:#a1c8a2}
+#term .amber{color:#d8b885}
+#term input{font:inherit;color:#e1e7dc;background:#191c19;border:1px solid #555e55;border-radius:2px;outline:none;padding:8px 11px;min-width:0}
+#term input:focus{border-color:#a1c8a2}
+#term button{font:inherit;cursor:pointer;color:#d8dfd5;background:none;border:1px solid #414941;border-radius:2px;padding:7px 12px}
+#term button:hover,#term button:focus-visible{background:#273428;outline:1px solid #a1c8a2}
+#term form{display:flex;gap:8px;align-items:center}
+#term .login form{margin-top:12px}
+#term .login input{width:190px}
+#term .note{font-size:11px;margin-top:13px;color:#a6b0a3;min-height:20px}
+#term .prompt{color:#a1c8a2;margin-bottom:22px}
+#term .menu{margin:25px 0}
+#term .menu button{display:flex;align-items:center;text-align:left;gap:14px;border:0;padding:13px 10px;width:100%;background:transparent}
+#term .menu button.selected{background:#243026;color:#d9efda;outline:1px solid #536e54}
+#term .menu .num{color:#a6b0a3}
+#term .menu .arrow{width:14px;color:#a1c8a2}
+#term h2{font:inherit;font-size:21px;line-height:1.3;font-weight:bold;color:#e7ede3;margin:13px 0 5px}
+#term h3{font-size:12px;font-weight:normal;color:#a1c8a2;letter-spacing:.08em;margin:24px 0 5px}
+#term p{margin:0 0 12px;max-width:75ch}
+#term .rule{border-top:1px dashed #454d45;margin:22px 0}
+#term .impact{font-size:27px;line-height:1.25;color:#b3d8b2;margin-bottom:7px}
+#term .command{margin-top:20px}
+#term .command input{width:100%;background:transparent;border:0;padding:6px 4px;border-bottom:1px solid #414941;border-radius:0}
+#term .footer{font-size:11px;display:flex;gap:22px;flex-wrap:wrap;margin-top:21px;color:#a6b0a3}
+#term .footer button{font-size:11px;border:none;padding:0;color:#a1c8a2}
+#term .metadata{font-size:11px;color:#a6b0a3;margin-bottom:20px}
+@media(max-width:500px){#term .screen{padding:23px 16px}#term .menu button{gap:8px;font-size:12px}#term .ascii{font-size:10px}#term h2{font-size:18px}}
+@media(max-width:600px){#term .chrome{height:auto;min-height:38px;flex-wrap:wrap;padding:10px}#term .chrome .session{flex-basis:100%;margin-left:0;overflow-wrap:anywhere}}
+#term .case-actions{display:flex;gap:12px;flex-wrap:wrap;margin:24px 0}
+#term a{color:#b3d8b2;text-decoration-thickness:1px;text-underline-offset:4px}
+#term a:focus-visible{outline:2px solid #a1c8a2;outline-offset:4px}
+#term .prototype-link{display:inline-block;border:1px solid #667d62;padding:7px 12px;text-decoration:none}
+#term .prototype-link:hover{background:#273428}
+#term .case-intro{font-size:15px;color:#d7ded2;line-height:1.8}
+#term .design-decision{margin:36px 0 0;padding-bottom:28px;border-bottom:1px dashed #454d45}
+#term .design-decision h3{font-size:18px;line-height:1.5;letter-spacing:0;color:#e7ede3;margin:0 0 14px}
+#term h4{font-size:13px;color:#b3d8b2;font-weight:normal;margin:22px 0 8px}
+#term .case-screen{display:block;width:100%;height:auto;border-radius:2px}
+#term .amp-case figcaption{font-size:12px;color:#a6b0a3;line-height:1.7}
+#term .amp-case figcaption a{display:block;margin-top:6px}
+#term .case-next{margin:30px 0}
+#term .prototype-routes{list-style:none;padding:0;margin:20px 0}#term .prototype-routes li{display:grid;grid-template-columns:160px 1fr;gap:20px;padding:12px 0;border-bottom:1px solid #343834}#term .prototype-routes span{color:#a6b0a3}@media(max-width:500px){#term .prototype-routes li{grid-template-columns:1fr;gap:4px}}
+#term .case-role{font-size:12px}
+#term .case-context,#term .case-outcomes{margin:22px 0;padding:0}
+#term .case-context>div,#term .case-outcomes>div{display:grid;grid-template-columns:150px 1fr;gap:20px;padding:12px 0;border-bottom:1px solid #343834;align-items:baseline}
+#term .case-context dt{color:#d7ded2}#term .case-context dd,#term .case-outcomes dd{margin:0;color:#a6b0a3}
+#term .case-outcomes dt{font-size:24px;line-height:1.3;color:#b3d8b2}
+#term dialog>a{display:inline-block;margin:8px}
+@media(max-width:500px){#term .case-context>div,#term .case-outcomes>div{grid-template-columns:105px 1fr;gap:12px}}
+</style>
+<div class="chrome"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span style="margin-left:6px">portfolio — albert vargas uxdesigner</span><span class="session" id="session">albertlazarovargas@gmail.com</span></div>
+<div class="screen" id="screen"></div>
+<script src="gallery-assets.js"></script>
+<script src="amp-case-study.js"></script>
+<script src="cru-case-study.js"></script>
+<script>
+(()=>{
+const root=document.getElementById('term'),screen=document.getElementById('screen'),session=document.getElementById('session');
+let mode='login',selected=0,activeCase=null,shot=0,history=[];
+const galleries=window.portfolioGalleries || [[],[],[]];
+const escapeHtml=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const cases=[
+{title:'Agent Management Platform',sub:'Enterprise AI infrastructure · LexisNexis Risk Solutions',problem:'Scaling AI-assisted visualization experiments requires a consistent way to manage models, agents, data sources and evaluation across multidisciplinary product teams.',approach:'A unified administration experience connecting workspaces, infrastructure configuration, data management, model experimentation, evaluation and monitoring.',outcome:'<div class="impact">−70% POC production time</div><p>The reduction in prototyping time led to the launch of the Visualization Library Playground.</p>',focus:'Enterprise UX architecture / AI orchestration / Visualization / Governance'},
+{title:window.cruCaseStudy.title,sub:window.cruCaseStudy.subtitle},
+{title:'Design System',sub:'Enterprise product design · Design-to-code alignment',problem:'Inconsistent interaction patterns and disconnected design and engineering workflows introduce unnecessary rework and increase the cost of maintaining enterprise applications.',approach:'A shared component architecture with design tokens, accessible patterns, documented behavior and stronger alignment between Figma and production code.',outcome:'<p>A scalable foundation for consistent product experiences, reusable implementation patterns and more efficient collaboration between design and engineering.</p>',focus:'Design systems / Component architecture / Accessibility / Governance'}
+];
+function login(){
+mode='login';activeCase=null;history=[];
+screen.innerHTML=`<div class="login"><pre class="ascii" aria-label="Mickey Mouse silhouette">
+    @@@@@@@           @@@@@@@
+  @@@@@@@@@@@       @@@@@@@@@@@
+ @@@@@@@@@@@@@     @@@@@@@@@@@@@
+ @@@@@@@@@@@@@     @@@@@@@@@@@@@
+  @@@@@@@@@@@       @@@@@@@@@@@
+    @@@@@@@  @@@@@@@  @@@@@@@
+        @@@@@@@@@@@@@@@@@
+      @@@@@@@@@@@@@@@@@@@@@
+     @@@@@@@@@@@@@@@@@@@@@@@
+     @@@@@@@@@@@@@@@@@@@@@@@
+     @@@@@@@@@@@@@@@@@@@@@@@
+      @@@@@@@@@@@@@@@@@@@@@
+        @@@@@@@@@@@@@@@@@
+           @@@@@@@@@@@
+</pre><div class="dim">Restricted access</div><form id="loginform"><input id="password" type="password" placeholder="Enter password" aria-label="Password" autocomplete="off"><button type="submit">Enter ↵</button></form><div class="note" id="feedback"></div></div>`;
+document.getElementById('loginform').onsubmit=e=>{e.preventDefault();if(document.getElementById('password').value==='imagine'){if(location.hash==='#amp'||location.hash==='#cru'){activeCase=selected=location.hash==='#cru'?1:0;go('case',false);}else go('menu',false);}else{document.getElementById('feedback').textContent='Access denied. Try again.';}};
+}
+
+const commands=[
+['/commands','Show this command reference'],
+['/home','Return to selected work'],
+['/01','Agent Management Platform (alias: /amp)'],
+['/02','CRU — AI-powered Transaction Processing (alias: /cru)'],
+['/03','Design System'],
+['/screens','Open the current case study gallery'],
+['/back','Return to the previous view'],
+['/exit','Lock the terminal']
+];
+function commandBar(){
+return `<form class="command" id="cmdform"><label class="green" for="cmd">$</label><input id="cmd" aria-label="Terminal command" placeholder="Type /commands for help" autocomplete="off" spellcheck="false"></form><div class="status" id="status" role="status"></div><div class="footer"><button data-command="/commands">/commands</button><button data-command="/home">/home</button><button data-command="/exit">/exit</button><span>${mode==='gallery'?'← → browse · Enter enlarge · Esc return':'↑ ↓ navigate · Enter select · Esc back'}</span></div>`;
+}
+function snapshot(){return {mode,selected,activeCase,shot};}
+function go(next,remember=true){
+if(remember && mode!=='login')history.push(snapshot());
+mode=next; render();
+}
+function back(){
+if(mode==='gallery'){mode='case';if(history.at(-1)?.mode==='case')history.pop();render();return;}
+const prev=history.pop();
+if(prev){({mode,selected,activeCase,shot}=prev);render();}else go('menu',false);
+}
+function run(v){
+v=v.trim().toLowerCase();
+if(v==='/amp')v='/01';
+if(v==='/cru')v='/02';
+if(['/commands','/command','/help'].includes(v)){go('help');return;}
+if(v==='/home'){go('menu');return;}
+if(v==='/exit'){login();return;}
+if(v==='/back'){back();return;}
+const match=v.match(/^\/?0?([123])$/);
+if(match){history.push(snapshot());activeCase=selected=Number(match[1])-1;shot=0;mode='case';render();return;}
+if(v==='/screens'||v==='/mockups'){
+if(activeCase===null){document.getElementById('status').textContent='Select a case study first: /01, /02 or /03.';return;}
+shot=0;go('gallery');return;
+}
+document.getElementById('status').textContent='Unknown command. Type /commands to see available commands.';
+}
+function ampContent(){
+const c=window.ampCaseStudy,images=galleries[0]||[];
+return `<article class="amp-case"><div class="prompt">visitor@portfolio:~$ /amp</div><h2>Agent Management Platform</h2><div class="metadata">Enterprise AI infrastructure · LexisNexis Risk Solutions</div><p class="case-intro">${c.summary}</p><div class="case-actions"><a class="prototype-link" href="amp/index.html#workspaces" target="_blank" rel="noopener">Open interactive prototype ↗</a><button data-command="/screens">/screens — Screenshots</button></div><div class="rule"></div><h3>The challenge</h3><p>${c.challenge}</p><h3>Who the platform serves</h3><p>${c.audience}</p><h3>The approach</h3><p>${c.approach}</p><div class="rule"></div><h2 class="decisions-heading">The decisions behind the experience.</h2>${c.decisions.map(d=>`<section class="design-decision"><h3>${d.title}</h3><p>${d.description}</p><h4>Why this decision</h4><p>${d.why}</p><h4>The trade-off</h4><p>${d.tradeoff}</p><h4>What it means for the interface</h4><p>${d.implication}</p></section>`).join('')}${images.length?`<h3>Screenshots</h3>${images.map((d,i)=>`<figure><button class="gallery-open" data-shot="${i}" aria-label="Enlarge ${escapeHtml(d.title)}"><img class="case-screen" src="${escapeHtml(d.src)}" alt="${escapeHtml(d.title)}" loading="lazy"></button><figcaption>${escapeHtml(d.title)}</figcaption></figure>`).join('')}`:''}<h3>The impact</h3>${cases[0].outcome}<div class="rule"></div><h3>Explore the interactive prototype</h3><p>Follow the workflow from workspace selection through configuration, evaluation and monitoring.</p><ul class="prototype-routes">${c.screens.map(([route,title,description])=>`<li><a href="amp/index.html#${route}" target="_blank" rel="noopener">${title} ↗</a><span>${description}</span></li>`).join('')}</ul><section class="case-next"><h3>What to measure next</h3><p>Track setup time, time from scenario to review, validation failures and the proportion of evaluated outputs accepted by reviewers. Read those measures alongside POC production time so speed does not obscure quality or rework.</p></section><div class="case-actions"><a class="prototype-link" href="amp/index.html#workspaces" target="_blank" rel="noopener">Explore the full prototype ↗</a><button data-command="/screens">/screens — Open gallery</button></div></article>${commandBar()}`;
+}
+function cruFigure(i){
+const image=galleries[1][i];
+return `<figure><button class="gallery-open" data-shot="${i}" aria-label="Enlarge ${escapeHtml(image.title)}"><img class="case-screen" src="${escapeHtml(image.src)}" alt="${escapeHtml(image.title)}" loading="lazy"></button><figcaption>${escapeHtml(image.title)}</figcaption></figure>`;
+}
+function cruContent(){
+const c=window.cruCaseStudy;
+return `<article class="amp-case cru-case"><div class="prompt">visitor@portfolio:~$ /cru</div><h2>${c.title}</h2><div class="metadata">${c.subtitle}</div><p class="case-intro">${c.summary}</p><p class="dim case-role">${c.role}</p><div class="case-actions"><button data-command="/screens">/screens — Explore 8 project visuals</button></div><dl class="case-outcomes"><div><dt>+20%</dt><dd>Overall productivity</dd></div><div><dt>+10%</dt><dd>Speed to cash</dd></div></dl>${cruFigure(6)}<div class="rule"></div><h3>The challenge</h3><p>${c.challenge}</p><h3>Operating context · 2022 project brief</h3><dl class="case-context">${c.context.map(([value,label])=>`<div><dt>${value}</dt><dd>${label}</dd></div>`).join('')}</dl><h3>Designed around experienced operators</h3><p>${c.people}</p>${cruFigure(1)}${cruFigure(2)}<h3>The approach</h3><p>${c.approach}</p><p>${c.process}</p>${cruFigure(3)}<div class="rule"></div><h2>The decisions behind the experience.</h2>${c.decisions.map(d=>`<section class="design-decision"><h3>${d.title}</h3><p>${d.description}</p>${cruFigure(d.image)}<h4>Why this decision</h4><p>${d.why}</p><h4>The trade-off</h4><p>${d.tradeoff}</p></section>`).join('')}<section class="case-next"><h3>The impact</h3><p class="case-intro">${c.impact}</p><p>${c.takeaway}</p></section><div class="case-actions"><button data-command="/screens">/screens — Open the full gallery</button><button data-command="/home">← Selected work</button></div></article>${commandBar()}`;
+}
+function bindCommands(){
+screen.querySelectorAll('[data-shot]').forEach(b=>b.onclick=()=>{shot=Number(b.dataset.shot);go('gallery');enlarge();});
+screen.querySelectorAll('[data-command]').forEach(b=>b.onclick=()=>run(b.dataset.command));
+document.getElementById('cmdform').onsubmit=e=>{e.preventDefault();const input=document.getElementById('cmd');const v=input.value;input.value='';run(v);};
+}
+function render(){
+
+if(mode==='menu'){
+screen.innerHTML=`<div class="prompt">visitor@portfolio:~$ /home</div><div class="dim">ACCESS GRANTED</div><h2>Selected work.</h2><p class="dim">Enterprise UX · AI · Design systems</p><div class="menu">${cases.map((c,i)=>`<button data-i="${i}" class="${i===selected?'selected':''}" aria-current="${i===selected?'true':'false'}"><span class="arrow">${i===selected?'›':' '}</span><span class="num">/0${i+1}</span><span>${c.title}</span></button>`).join('')}</div>${commandBar()}`;
+screen.querySelectorAll('[data-i]').forEach(b=>b.onclick=()=>run('/0'+(Number(b.dataset.i)+1)));
+}else if(mode==='help'){
+screen.innerHTML=`<div class="prompt">visitor@portfolio:~$ /commands</div><h2>Command reference.</h2><p class="dim">Type a command or select it below.</p><ul class="help-list">${commands.map(([cmd,label])=>`<li><button data-command="${cmd}"><code>${cmd}</code><span>${label}</span></button></li>`).join('')}</ul><p class="dim">Aliases: /command and /help → /commands; /mockups → /screens.</p>${commandBar()}`;
+}else if(mode==='case'){
+const c=cases[activeCase];
+if(activeCase===0){screen.innerHTML=ampContent();}else if(activeCase===1){screen.innerHTML=cruContent();}else{
+screen.innerHTML=`<div class="prompt">visitor@portfolio:~$ /0${activeCase+1}</div><h2>${c.title}</h2><div class="metadata">${c.sub}</div><div class="rule"></div><h3>01 / THE CHALLENGE</h3><p>${c.problem}</p><h3>02 / THE APPROACH</h3><p>${c.approach}</p><h3>03 / THE IMPACT</h3>${c.outcome}<div class="rule"></div><div class="metadata">${c.focus}</div><button data-command="/screens">/screens — View screenshots</button>${commandBar()}`;
+}
+}else{
+const c=cases[activeCase],images=galleries[activeCase]||[],item=images[shot];
+screen.innerHTML=`<div class="prompt">visitor@portfolio:~$ /screens</div><h2>${c.title}</h2><p class="dim">Screenshot gallery</p>${item?`<figure><button class="gallery-open" id="enlarge" aria-label="Enlarge screenshot"><img class="gallery-image" src="${escapeHtml(item.src)}" alt="${escapeHtml(item.title)}"></button><figcaption>${String(shot+1).padStart(2,'0')} / ${String(images.length).padStart(2,'0')} — ${escapeHtml(item.title)}</figcaption></figure><div class="gallery-controls"><button id="prev" ${images.length<2?'disabled':''}>← Previous</button><button id="next" ${images.length<2?'disabled':''}>Next →</button><button id="expand">Enlarge ↵</button></div><dialog aria-label="Enlarged screenshot"><button id="close">Close · Esc</button> <a href="${escapeHtml(item.src)}" target="_blank" rel="noopener">Open full-resolution image ↗</a><img src="${escapeHtml(item.src)}" alt="${escapeHtml(item.title)}"></dialog>`:`<div class="empty"><p>No screenshots available yet.</p><span class="dim">Return to the case study to explore the challenge, approach and impact.</span></div>`}<p style="margin-top:20px"><button data-command="/back">← Return to case study</button></p>${commandBar()}`;
+if(item){
+document.getElementById('prev').onclick=()=>moveShot(-1);
+document.getElementById('next').onclick=()=>moveShot(1);
+document.getElementById('enlarge').onclick=enlarge;
+document.getElementById('expand').onclick=enlarge;
+const dialog=screen.querySelector('dialog');
+document.getElementById('close').onclick=()=>dialog.close();
+dialog.addEventListener('keydown',e=>{if(e.key==='Escape')e.stopPropagation();});
+screen.querySelector('.gallery-image').onerror=()=>{document.getElementById('status').textContent='This screenshot could not be loaded. Try another image or return to the case study.';};
+}
+}
+bindCommands();root.focus();
+}
+function moveShot(direction){const n=(galleries[activeCase]||[]).length;if(n){shot=(shot+direction+n)%n;render();}}
+function enlarge(){screen.querySelector('dialog')?.showModal();}
+root.addEventListener('keydown',e=>{
+if(mode==='login'||screen.querySelector('dialog[open]'))return;
+if(e.key==='Escape'){e.preventDefault();back();return;}
+if(e.target.tagName==='INPUT')return;
+if(mode==='menu'&&['ArrowDown','ArrowUp','Enter'].includes(e.key)){
+if(e.key==='Enter'&&e.target.tagName==='BUTTON')return;
+e.preventDefault();
+if(e.key==='Enter'){run('/0'+(selected+1));return;}
+selected=(selected+(e.key==='ArrowDown'?1:2))%3;render();
+}
+if(mode==='gallery'&&['ArrowLeft','ArrowRight','Enter'].includes(e.key)){
+if(e.key==='Enter'&&e.target.tagName==='BUTTON')return;
+e.preventDefault();if(e.key==='Enter')enlarge();else moveShot(e.key==='ArrowRight'?1:-1);
+}
+if(e.key==='/'){e.preventDefault();const inp=document.getElementById('cmd');inp.focus();inp.value='/';}
+});
+
+login();
+})();
+</script>
+</div>
+</body></html>
